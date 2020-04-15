@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
 import './style.scss';
+import { HeartFilled } from '@ant-design/icons';
+
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -39,6 +41,15 @@ const BeerDetail = () => {
                   {beer[attribute]}
                 </Descriptions.Item>
               ))}
+
+              <Descriptions.Item className = "beers-detail" label = "Color">
+                <br/>
+                <HeartFilled spin = {true} style={{ fontSize: '100px', color: '#BF7138'}}/>
+              </Descriptions.Item>
+
+
+
+
             </Descriptions>
           </Col>
         </Row>
@@ -48,4 +59,3 @@ const BeerDetail = () => {
 };
 
 export { BeerDetail };
-
