@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Beers, BeerDetail } from './components/Beers';
+import { Navbar } from './components/Navbar';
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,7 +16,9 @@ const { Header, Content, Footer } = Layout;
 function App() {
   return (
     <Layout>
-      <Header />
+      <Header>
+        <Navbar/>
+      </Header>
       <Content style={{ padding: '100px 150px 100px 150px' }}>
         <Router>
           <Switch>
