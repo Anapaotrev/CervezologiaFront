@@ -16,7 +16,7 @@ const Navbar = (props) => {
         </Text>
       </Col>
       <Col span={1}>
-        <Link to="/">HOME</Link>
+        <Link to="/" className="link">HOME</Link>
       </Col>
       <Col span={1} justify="end">
         {isAuth() ? (

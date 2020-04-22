@@ -2,7 +2,7 @@ import { Button, Form, Input, message, Typography } from 'antd';
 import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../../utils';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import './style.scss';
 
 const { Text, Title } = Typography;
@@ -25,7 +25,7 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (isAuth) {
+    if (isAuth()) {
       history.push('/');
     }
   }, []);
@@ -63,7 +63,7 @@ const LoginForm = () => {
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 6 }}>
         <Text style={{ fontWeight: '400' }} level={2}>
-          ¿No eres un miembro? ¡Regístrate ya!
+          ¿No eres un miembro? <Link to="/register">¡Regístrate ya!</Link>
         </Text>
       </Form.Item>
     </Form>
