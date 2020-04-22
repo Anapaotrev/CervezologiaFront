@@ -1,0 +1,16 @@
+@import "./variables.scss";
+
+.header {
+  background-color: rgb(240,242,245) !important;
+}
+
+.content {
+  background-color: rgb(240,242,245) !important;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-family: 'Raleway',Sans-serif;
+}
