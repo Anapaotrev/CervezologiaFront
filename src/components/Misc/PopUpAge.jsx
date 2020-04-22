@@ -1,23 +1,24 @@
-import { Card, Typography } from 'antd';
-import React from 'react';
-import { EyeOutlined } from '@ant-design/icons';
+import { Card, Empty, Icon, List, Typography, Layout, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import "./style.scss";
 import { useHistory } from 'react-router-dom';
-import './style.scss';
-const { Text } = Typography;
 
-const Beer = ({ _id, name, image, origin, brewery, style }) => {
 
-  const history = useHistory();
+const { Title } = Typography;
+const { Header, Content, Footer } = Layout;
 
-  const actions = [
-    <EyeOutlined onClick={() => history.push(`/beer/${_id}`)}/>
-  ];
+
+const PopUpAge = () => {
 
   return (
-    <Card title={name} className="beer-card" actions={actions}>
-      {/* <div alt={name} className="beer-image" style={{ backgroundImage: `url(${photoUrl})`}} ></div> */}
-    </Card>
+    <Layout>
+      <Header>
+      
+      </Header>
+      <Footer />
+    </Layout>
   );
 };
 
-export { Beer };
+export default { PopUpAge };

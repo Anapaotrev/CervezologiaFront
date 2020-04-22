@@ -62,7 +62,7 @@ const BeerDetail = () => {
           <Col sm={5} className="beer-image" style={{ backgroundImage: `url(${beer.photoUrl})`, height: "500px", marginRight: "15px" }}>
           </Col>
           <Col sm={15}>
-            <Descriptions title="Informacion">
+            <Descriptions title="Información">
               {beerAtt.map((attribute) => (
                 <Descriptions.Item className = "beers-detail" label={attribute.toUpperCase()}>
                   {beer[attribute]}

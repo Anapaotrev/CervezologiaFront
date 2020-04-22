@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Beers, BeerDetail } from './components/Beers';
+import PopUpAge from './components/Misc/PopUpAge.jsx';
 
 import {
   BrowserRouter as Router,
