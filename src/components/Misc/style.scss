@@ -19,17 +19,13 @@
 .beer-image {
   background-size: cover;
   background-position: center;
-  height: 150px;
-  box-shadow: 0 10px 6px -6px #777;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  width: 50%;
+  height: 200px;
 }
 
 .beer-detail-image {
   height: 300px;
 }
+
 
 .beers-detail{
   background-color: $secondary-background !important;
@@ -39,8 +35,4 @@
   height: 200px;
   width: 200px;
   font-size: 100px;
-}
-=======
-.beer-image-container {
- width: 200px;
 }

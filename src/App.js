@@ -1,7 +1,9 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Beers, BeerDetail } from './components/Beers';
+
 import { Navbar } from './components/Navbar';
+
 import {
   BrowserRouter as Router,
   Switch,
