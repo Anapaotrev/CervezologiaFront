@@ -1,0 +1,38 @@
+@import "./../../variables.scss";
+
+.beers-header {
+  background-color: $secondary-background !important;
+  padding: 10px 10px 0px 10px !important;
+  margin: 0px !important;
+  border-bottom: 1px solid rgb(242, 242, 242);
+}
+
+.beers-content {
+  padding: 15px 15px 15px 15px;
+  background-color: $background-color;
+}
+
+.beer-card {
+  width: 240px !important;
+}
+
+.beer-image {
+  background-size: cover;
+  background-position: center;
+  height: 200px;
+}
+
+.beer-detail-image {
+  height: 300px;
+}
+
+
+.beers-detail{
+  background-color: $secondary-background !important;
+  padding: 10px 10px 50px 10px !important;
+  margin: 0px !important;
+  border-bottom: 1px solid rgb(242, 242, 242);
+  height: 200px;
+  width: 200px;
+  font-size: 100px;
+}
