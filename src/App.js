@@ -1,7 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
 import { Beers, BeerDetail } from './components/Beers';
-import PopUpAge from './components/Misc/PopUpAge.jsx';
+
+import { Navbar } from './components/Navbar';
 
 import {
   BrowserRouter as Router,
@@ -17,7 +18,9 @@ const { Header, Content, Footer } = Layout;
 function App() {
   return (
     <Layout>
-      <Header />
+      <Header>
+        <Navbar/>
+      </Header>
       <Content style={{ padding: '100px 150px 100px 150px' }}>
         <Router>
           <Switch>

@@ -1,6 +1,6 @@
-import { Card, Empty, Icon, List, Typography, Layout, message } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Col, Layout, List, message, Row, Typography } from 'antd';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Beer } from './Beer';
 import "./style.scss";
 
@@ -13,11 +13,11 @@ const Beers = () => {
 
   useEffect(() => {
     axios.get('/beers')
-    .then((response) => {
-      setBeers(response.data);
-    }).catch((error) => {
-      message.error(error.statusText)
-    });
+      .then((response) => {
+        setBeers(response.data);
+      }).catch((error) => {
+        message.error(error.statusText)
+      });
   }, []);
 
 
@@ -27,17 +27,25 @@ const Beers = () => {
         <Title className="beers-title" level={1}>Cervezas</Title>
       </Header>
       <Content className="beers-content">
-        <List
-          grid={{
-            gutter: 10,
-          }}
-          dataSource={beers}
-          renderItem={(beer) => (
-            <List.Item>
-              <Beer {...beer}/>
-            </List.Item>
-          )}
-        />
+        <Row>
+          <Col>
+            
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={24}>
+            <List
+              itemLayout="vertical"
+              dataSource={beers}
+              pagination={{
+                pageSize: 10,
+              }}
+              renderItem={(beer) => (
+                <Beer beer={beer} />
+              )}
+            />
+          </Col>
+        </Row>
       </Content>
       <Footer />
     </Layout>
@@ -45,3 +53,4 @@ const Beers = () => {
 };
 
 export { Beers };
+
