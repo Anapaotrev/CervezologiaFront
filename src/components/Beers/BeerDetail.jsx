@@ -17,6 +17,18 @@ const beercolors = ["#F3F993", "#F5F75C",'#F6F513','#EAE615','#E0D01B','#D5BC26'
 ,'#A85839','#985336','#8D4C32','#7C452D','#6B3A1E','#5D341A','#4E2A0C','#4A2727'
 ,'#361F1B','#261716','#231716','#19100F','#16100F','#120D0C','#100B0A','#050B0A']
 
+
+
+function fillMissingValues(val){
+  if(!val){
+    return "N/D"
+  }
+  else{
+    return val
+  }
+}
+
+
 const BeerDetail = () => {
 
   const { _id } = useParams();
@@ -37,7 +49,7 @@ const BeerDetail = () => {
       beerColor = beercolors[0]
     }
     else{
-      beerColor = beercolors[beer.srm - 1];
+      beerColor = beercolors[Math.floor(beer.srm - 1)];
     }
 
   return (
@@ -52,21 +64,17 @@ const BeerDetail = () => {
           <Col sm={15}>
             <Descriptions title="Informacion">
               {beerAtt.map((attribute) => (
-                <Descriptions.Item label={attribute.toUpperCase()}>
+                <Descriptions.Item className = "beers-detail" label={attribute.toUpperCase()}>
                   {beer[attribute]}
                 </Descriptions.Item>
               ))}
 
-              <Descriptions.Item label = {"SRM"}>
-                <div>
-                  <Progress type = "circle" strokeColor = {beerColor} percent={(beer.srm/30)*100} format={percent => `${beer.srm} `} />
-                </div>
+              <Descriptions.Item className = "beers-detail">
+                  <Progress type = "circle" width = {166} strokeWidth= {8} strokeColor = {beerColor} percent={(beer.srm/30)*100} format={percent => `SRM: ${fillMissingValues(beer.srm)} `} />
               </Descriptions.Item>
 
-              <Descriptions.Item label = {"ABV"}>
-                <div>
-                  <Progress type="circle" strokeColor = {beerColor} percent={beer.abv} />
-                </div>
+              <Descriptions.Item className = "beers-detail">
+                  <Progress type="circle" width = {166} strokeWidth= {8} strokeColor = {beerColor} percent={beer.abv} format={percent => `ABV: ${fillMissingValues(beer.abv)}%`} />
               </Descriptions.Item>
 
             </Descriptions>
