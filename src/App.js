@@ -35,7 +35,7 @@ function App() {
               </Route>
             </Switch>
           </Content>
-          <Footer />
+          <Footer className="footer" />
         </Layout>
       </Router>
     </UserContextProvider>

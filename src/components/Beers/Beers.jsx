@@ -35,6 +35,9 @@ const Beers = () => {
         <Row>
           <Col sm={24}>
             <List
+              grid={{
+                gutter: 16,
+              }}
               itemLayout="vertical"
               dataSource={beers}
               pagination={{
