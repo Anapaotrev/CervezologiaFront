@@ -1,6 +1,4 @@
-import { Typography, Layout, List, message,
-  Button, Row, Col, Drawer } from 'antd';
-import { FilterOutlined } from '@ant-design/icons';
+import { Layout, List, message, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Beer } from './Beer';
