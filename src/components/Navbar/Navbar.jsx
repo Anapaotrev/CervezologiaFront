@@ -10,13 +10,17 @@ const Navbar = (props) => {
   const { isAuth, setUnauthStatus } = useContext(UserContext);
   return (
     <Row justify="end" align="middle">
-      <Col span={22}>
+      <Col span={21}>
         <Text style={{ paddingTop: '5px', fontWeight: '800', fontSize: '20px', color: '#000000' }}>
           Cervezologia
         </Text>
       </Col>
       <Col span={1}>
         <Link to="/" className="link">HOME</Link>
+      </Col>
+      <Col span={1}>
+        | 
+        <Link to="/map" className="link"> MAP</Link>
       </Col>
       <Col span={1} justify="end">
         {isAuth() ? (

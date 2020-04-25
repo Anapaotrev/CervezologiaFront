@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Beers, BeerDetail } from './components/Beers';
+import { BeerMap } from './components/Map'
 import { Navbar } from './components/Navbar';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
@@ -32,6 +33,9 @@ function App() {
               </Route>
               <Route path="/" exact>
                 <Beers />
+              </Route>
+              <Route path="/map" exact>
+                <BeerMap />
               </Route>
             </Switch>
           </Content>
