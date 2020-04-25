@@ -3,12 +3,6 @@ import { Layout } from 'antd';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Beers, BeerDetail } from './components/Beers';
 import { Navbar } from './components/Navbar';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 import { Login } from './components/Login';
 import { Register } from './components/Register';
 import UserContextProvider from './utils/userContext';
