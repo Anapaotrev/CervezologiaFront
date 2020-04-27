@@ -73,12 +73,12 @@ const Filters = (props) => {
   }
 
   return(
-    <Header className="beers-header">
+    <Header>
       <Row>
-        <Col span={20}>
-          <Title className="beers-title" level={1}>Cervezas</Title>
+        <Col span={22}>
+          <h2 class="beers-title">Cervezas</h2>
         </Col>
-        <Col span={4}>
+        <Col span={2}>
             <Button type="primary" onClick={() => setVisible(true)}>Filter <FilterOutlined /></Button>
         </Col>
       </Row>

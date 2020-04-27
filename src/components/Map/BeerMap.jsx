@@ -1,10 +1,11 @@
 import { Layout } from 'antd';
 import React, { useEffect, useState } from 'react';
 import MapContainer from './MapContainer';
+import "./style.scss";
 import { message } from 'antd';
 import axios from 'axios';
 
-const { Content } = Layout;
+const { Header } = Layout;
 
 const BeerMap = () => {
 
@@ -31,9 +32,10 @@ const BeerMap = () => {
 
   return (
     <Layout>
-      <Content>
-        <MapContainer places={places}/>
-      </Content>
+      <Header>
+      <h2 class="map-title">Mapa</h2>
+      </Header>
+      <MapContainer places={places}/>
     </Layout>
   );
 };

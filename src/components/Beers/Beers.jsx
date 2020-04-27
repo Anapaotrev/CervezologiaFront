@@ -41,11 +41,13 @@ const Beers = () => {
             <List
               grid={{
                 gutter: 16,
+                column: 6
               }}
               itemLayout="vertical"
               dataSource={beers}
               pagination={{
-                pageSize: 10,
+                pageSize: 18,
+                showSizeChanger: false
               }}
               renderItem={(beer) => (
                 <Beer beer={beer} />
