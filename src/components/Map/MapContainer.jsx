@@ -1,11 +1,22 @@
-import React, { Component, } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
-
+import React, { Component, } from 'react';
+import { Descriptions } from 'antd';
+import DescriptionsItem from 'antd/lib/descriptions/Item';
 
 const mapStyle = {
   width: '79.2%',
   height: '65%'
 };
+
+const mapStyles = [{
+  "featureType": "poi",
+  "elementType": "labels.icon",
+  "stylers": [
+    {
+      "visibility": "off"
+    }
+  ]
+}]
 
 export class MapContainer extends Component {
   state = {
@@ -36,23 +47,43 @@ export class MapContainer extends Component {
         google={this.props.google}
         zoom={12}
         style={mapStyle}
+        styles={mapStyles}
         initialCenter={{
          lat: 25.686613,
          lng: -100.316116
         }}
       >
-        {console.log("PLACES:")}
-        {console.log(this.props.places)}
         {this.props.places.map((place, index) => {
-          {console.log(place.name)}
+          var color;
+          switch(place.category) {
+            case "Bar":
+              color = "orange";
+              break;
+            case "Deposito":
+              color = "green";
+              break;
+            case "Cerveceria":
+              color = "yellow";
+              break;
+            default:
+              color = "red";
+          }
+          const icon = `http://maps.google.com/mapfiles/ms/icons/${color}-dot.png`
           return (
-            <Marker key={index} id={index} position={{
+            <Marker key={index} id={index} 
+            position={{
               lat: place.lat,
-              lng: place.lng
+              lng: place.lng,
             }}
+            icon= { icon }
             onClick={this.onMarkerClick}
             name={place.name}
             category={place.category} 
+            instagram={place.instagram}
+            schedule={place.schedule}
+            website={place.website}
+            address={place.address}
+            phoneNo={place.phoneNo}
             />
           )
         })}
@@ -62,9 +93,34 @@ export class MapContainer extends Component {
         onClose={this.onClose}
         >
           <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-            <h5>{this.state.selectedPlace.category}</h5>
+            <h2>{this.state.selectedPlace.name}</h2>
+            <h1>{this.state.selectedPlace.category}</h1>
+            <h4>Schedule: {this.state.selectedPlace.schedule}</h4>
+            <h4>Instagram: 
+              <a href={`https://www.instagram.com/${this.state.selectedPlace.instagram}`} target="_blank">
+                {this.state.selectedPlace.instagram}
+              </a>
+            </h4>
+            <h4>Website: 
+              <a href={this.state.selectedPlace.website} target="_blank">{this.state.selectedPlace.website}</a>
+            </h4>
+            <h4>Address: {this.state.selectedPlace.address}</h4>
+            <h4>Contact: {this.state.selectedPlace.phoneNo}</h4>
           </div>
+          {/* <Descriptions title={this.state.selectedPlace.name}>
+            <DescriptionsItem label="Teléfono">{this.state.selectedPlace.phoneNo}</DescriptionsItem>
+            <DescriptionsItem label="Instagram">
+              <a href={`https://www.instagram.com/${this.state.selectedPlace.instagram}`} target="_blank">
+                {this.state.selectedPlace.instagram}
+              </a>
+            </DescriptionsItem>
+            <DescriptionsItem label="Website">
+              <a href={this.state.selectedPlace.website} target="_blank">{this.state.selectedPlace.website}</a>
+            </DescriptionsItem>
+            <DescriptionsItem label="Dirección">{this.state.selectedPlace.address}</DescriptionsItem>
+            <DescriptionsItem label="Horario">{this.state.selectedPlace.schedule}</DescriptionsItem>
+            <DescriptionsItem label="Categoría">{this.state.selectedPlace.category}</DescriptionsItem>
+          </Descriptions> */}
         </InfoWindow>
       </Map>
     );

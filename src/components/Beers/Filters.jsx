@@ -76,7 +76,7 @@ const Filters = (props) => {
     <Header>
       <Row>
         <Col span={22}>
-          <h2 class="beers-title">Cervezas</h2>
+          <h2 className="beers-title">Cervezas</h2>
         </Col>
         <Col span={2}>
             <Button type="primary" onClick={() => setVisible(true)}>Filter <FilterOutlined /></Button>
