@@ -52,6 +52,7 @@ export class MapContainer extends Component {
          lat: 25.686613,
          lng: -100.316116
         }}
+        onClick={this.onClose}
       >
         {this.props.places.map((place, index) => {
           var color;
@@ -95,17 +96,19 @@ export class MapContainer extends Component {
           <div>
             <h2>{this.state.selectedPlace.name}</h2>
             <h1>{this.state.selectedPlace.category}</h1>
-            <h4>Schedule: {this.state.selectedPlace.schedule}</h4>
+            { this.state.selectedPlace.schedule != "-" && <h4>Horario: {this.state.selectedPlace.schedule}</h4> }
             <h4>Instagram: 
               <a href={`https://www.instagram.com/${this.state.selectedPlace.instagram}`} target="_blank">
                 {this.state.selectedPlace.instagram}
               </a>
             </h4>
-            <h4>Website: 
-              <a href={this.state.selectedPlace.website} target="_blank">{this.state.selectedPlace.website}</a>
-            </h4>
-            <h4>Address: {this.state.selectedPlace.address}</h4>
-            <h4>Contact: {this.state.selectedPlace.phoneNo}</h4>
+            { this.state.selectedPlace.website != "-" && 
+              <h4>Website: 
+                <a href={this.state.selectedPlace.website} target="_blank">{this.state.selectedPlace.website}</a>
+              </h4>
+            }
+            { this.state.selectedPlace.address != "-" && <h4>Dirección: {this.state.selectedPlace.address}</h4> }
+            { this.state.selectedPlace.phoneNo != "-" && <h4>Contacto: {this.state.selectedPlace.phoneNo}</h4> }
           </div>
           {/* <Descriptions title={this.state.selectedPlace.name}>
             <DescriptionsItem label="Teléfono">{this.state.selectedPlace.phoneNo}</DescriptionsItem>
