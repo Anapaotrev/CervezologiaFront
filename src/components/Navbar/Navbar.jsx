@@ -16,7 +16,7 @@ const Navbar = (props) => {
       <Col span={18}>
         <img src={ require('../../assets/logo-color.png') } className="logo"/>
         <Text style={{ paddingTop: '5px', fontWeight: '800', fontSize: '20px', color: '#000000' }}>
-          Cervezologia
+          Cervezología MX
         </Text>
       </Col>
       <Menu 
