@@ -37,14 +37,23 @@ const BeerMap = () => {
     <Layout>
       <Header>
         <Row>
-          <Col span={17}>
+          <Col span={16}>
             <h2 className="map-title">Mapa</h2>
           </Col>
-          <Col span={7}>
+          <Col span={8}>
             <Checkbox.Group onChange={onChange} defaultValue={['Cerveceria', 'Deposito', 'Bar']}>
-                <Checkbox style={{color: "white"}} value="Cerveceria">Cervecerías</Checkbox>
-                <Checkbox style={{color: "white"}} value="Deposito">Depósitos</Checkbox>
-                <Checkbox style={{color: "white"}} value="Bar">Bares</Checkbox>
+                <Checkbox style={{color: "white"}} value="Cerveceria">
+                  Cervecerías
+                  <img src="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png" height="20" width="20"></img>
+                </Checkbox>
+                <Checkbox style={{color: "white"}} value="Deposito">
+                  Depósitos
+                  <img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png" height="20" width="20"></img>  
+                </Checkbox>
+                <Checkbox style={{color: "white"}} value="Bar">
+                  Bares
+                  <img src="http://maps.google.com/mapfiles/ms/icons/orange-dot.png" height="20" width="20"></img>
+                </Checkbox>
             </Checkbox.Group>
           </Col>
         </Row>
