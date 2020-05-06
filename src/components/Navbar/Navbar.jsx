@@ -4,7 +4,6 @@ import './style.scss';
 const { Text, Title } = Typography;
 
 const Navbar = (props) => {
-
   return (
     <Title level={1} style={{ color: "#FFFFFF", paddingTop: '5px' }}>
       Cervezologia
@@ -13,4 +12,3 @@ const Navbar = (props) => {
 };
 
 export { Navbar };
-

@@ -9,6 +9,7 @@ const { Header, Content, Footer } = Layout;
 
 const Beers = () => {
 
+  
   const [beers, setBeers] = useState([]);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const Beers = () => {
       <Content className="beers-content">
         <Row>
           <Col>
-            
+
           </Col>
         </Row>
         <Row>
@@ -53,4 +54,3 @@ const Beers = () => {
 };
 
 export { Beers };
-
