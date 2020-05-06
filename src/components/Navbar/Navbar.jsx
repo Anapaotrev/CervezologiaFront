@@ -7,7 +7,9 @@ import './style.scss';
 const { Text, Title } = Typography;
 
 const Navbar = (props) => {
+  
   const { isAuth, setUnauthStatus } = useContext(UserContext);
+
   return (
     <Row justify="end" align="middle">
       <Col span={22}>

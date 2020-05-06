@@ -16,6 +16,13 @@
   border-radius: 20px 20px 20px 20px;
 }
 
+.beers-box{
+  padding: 15px 15px 15px 15px;
+  background-color: $background-color;
+  box-shadow: 4px 20px 53px -16px rgba(0,0,0,0.48);
+
+}
+
 .beer-card {
   width: 240px !important;
 }
@@ -48,11 +55,12 @@
 .beers-detail{
   background-color: $secondary-background !important;
   padding: 10px 10px 50px 10px !important;
-  margin: 0px !important;
-  border-bottom: 1px solid rgb(242, 242, 242);
-  height: 200px;
-  width: 200px;
-  font-size: 100px;
+  height: 10px;
+  font-weight: 600 !important;
+  float:left;
+}
+
+.beers-graph{
 }
 
 .beer-image-container {
@@ -68,3 +76,4 @@
   box-shadow: 4px 20px 53px -16px rgba(0,0,0,0.48);
   border-radius: 20px 20px 20px 20px;
 }
+
