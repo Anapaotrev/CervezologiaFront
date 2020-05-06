@@ -55,12 +55,13 @@ function fillMissingValues(val) {
 }
 
 const BeerDetail = () => {
+  
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
   const history = useHistory();
-
+    
   const { _id } = useParams();
   const [beer, setBeer] = useState({});
 
@@ -95,17 +96,35 @@ const BeerDetail = () => {
         {beer.name}
       </Title>
       <Content className="beers-box">
+
+  if (!beer.srm || beer.srm >= 30) {
+    beerColor = beercolors[0];
+  } else {
+    beerColor = beercolors[Math.floor(beer.srm - 1)];
+  }
+
+  return (
+    <Layout>
+      <Header className="beers-header"></Header>
+      <Content className="beers-content beer-container">
         <Row>
           <Col
             sm={5}
             className="beer-image-detail"
             style={{
+
               backgroundImage: `url(${beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'})`,
+
+              backgroundImage: `url(${beer.photoUrl})`,
+                
               height: '500px',
               marginRight: '15px',
             }}
           ></Col>
           <Col sm={15}>
+            <Title className="beers-title" level={1}>
+              {beer.name}
+            </Title>
             <Descriptions title="Información">
               {beerAtt.map((attribute) => (
                 <Descriptions.Item className="beers-detail" label={attribute.toUpperCase()}>
@@ -113,16 +132,24 @@ const BeerDetail = () => {
                 </Descriptions.Item>
               ))}
 
+
               <Descriptions.Item className="beers-graph">
                 <Progress
                   type="circle"
                   width={230}
+
+              <Descriptions.Item className="beers-detail">
+                <Progress
+                  type="circle"
+                  width={166}
+
                   strokeWidth={8}
                   strokeColor={beerColor}
                   percent={(beer.srm / 30) * 100}
                   format={(percent) => `SRM: ${fillMissingValues(beer.srm)} `}
                 />
               </Descriptions.Item>
+
 
               <Descriptions.Item className="beers-graph">
                 <Progress
@@ -131,6 +158,15 @@ const BeerDetail = () => {
                   strokeWidth={8}
                   strokeColor={beerColor}
                   percent={(beer.abv*100/15)%100}
+
+              <Descriptions.Item className="beers-detail">
+                <Progress
+                  type="circle"
+                  width={230}
+                  strokeWidth={8}
+                  strokeColor={beerColor}
+                  percent={beer.abv}
+
                   format={(percent) => `ABV: ${fillMissingValues(beer.abv)}%`}
                 />
               </Descriptions.Item>
