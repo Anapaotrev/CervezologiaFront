@@ -33,12 +33,12 @@ const LoginForm = () => {
   return (
     <Form
       onFinish={onSubmit}
-      style={{ padding: '150px 75px 100px 10px' }}
-      wrapperCol={{ offset: 6, span: 16 }}
+      style={{ padding: '150px 20px 100px 20px' }}
+      wrapperCol={{offset: 3,  span: 17 }}
     >
-      <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+      <Form.Item wrapperCol={{offset: 3, span: 17 }}>
         <Title style={{ color: '#4a2328' }} level={2}>
-          Cervezologia
+          Cervezología MX
         </Title>
       </Form.Item>
       <Form.Item name="email">
@@ -47,7 +47,7 @@ const LoginForm = () => {
       <Form.Item name="password">
         <Input.Password placeholder="Contraseña" />
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
+      <Form.Item wrapperCol={{offset: 3, span: 17 }}>
         <Button
           type="primary"
           htmlType="submit"
@@ -61,7 +61,7 @@ const LoginForm = () => {
           Ingresar
         </Button>
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 6 }}>
+      <Form.Item wrapperCol={{ offset: 3}}>
         <Text style={{ fontWeight: '400' }} level={2}>
           ¿No eres un miembro? <Link to="/register">¡Regístrate ya!</Link>
         </Text>

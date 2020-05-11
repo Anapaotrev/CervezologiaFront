@@ -12,8 +12,6 @@
 .beers-content {
   padding: 15px 15px 15px 15px;
   background-color: $background-color;
-  box-shadow: 4px 20px 53px -16px rgba(0,0,0,0.48);
-  border-radius: 20px 20px 20px 20px;
 }
 
 .beers-box{
@@ -68,9 +66,13 @@
  width: 200px;
 }
 
+.site-drawer-render-in-current-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
 .beers-title {
-  font-weight: 900 !important;
-  color: rgb(57, 57, 57) !important;
+  color: white;
 }
 
 .beer-container {

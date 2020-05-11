@@ -1,32 +1,36 @@
-import { Col, Layout, List, message, Row, Typography } from 'antd';
-import axios from 'axios';
+import { Layout, List, message, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Beer } from './Beer';
 import "./style.scss";
+import { Filters } from './Filters';
 
-const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const Beers = () => {
 
   
   const [beers, setBeers] = useState([]);
+  const [filter, setFilter] = useState({});
 
   useEffect(() => {
-    axios.get('/beers')
-      .then((response) => {
-        setBeers(response.data);
-      }).catch((error) => {
-        message.error(error.statusText)
-      });
-  }, []);
-
+  axios.get('/beers', {
+    params: {
+      origin: filter.origin,
+      brewery: filter.brewery,
+      style: filter.style
+    }
+  })
+  .then((response) => {
+    setBeers(response.data);
+  }).catch((error) => {
+    message.error(error.statusText)
+  });
+  }, [filter]);
 
   return (
     <Layout>
-      <Header className="beers-header">
-        <Title className="beers-title" level={1}>Cervezas</Title>
-      </Header>
+      <Filters onSearch={setFilter}/>
       <Content className="beers-content">
         <Row>
           <Col>
@@ -38,11 +42,13 @@ const Beers = () => {
             <List
               grid={{
                 gutter: 16,
+                column: 6
               }}
               itemLayout="vertical"
               dataSource={beers}
               pagination={{
-                pageSize: 10,
+                pageSize: 18,
+                showSizeChanger: false
               }}
               renderItem={(beer) => (
                 <Beer beer={beer} />

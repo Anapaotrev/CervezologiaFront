@@ -1,10 +1,8 @@
 .login-button {
-  display: block;
-  height:30px;
   width: 100px;
+  margin-bottom: 19%;
   line-height: 30px;
   text-align: center;
-  text-decoration: none;
   font-weight: 800;
   font-size: 1em;
   text-transform: uppercase;
@@ -28,4 +26,9 @@
   color: #525252;
   font-weight: 550;
   letter-spacing: 1.2px;
+}
+
+.logo {
+  width: 65px;
+  margin-right: 10px;
 }

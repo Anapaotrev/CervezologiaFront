@@ -22,7 +22,7 @@ const Beer = ({ beer }) => {
   );
 
   return (
-    <List.Item style={{ width: '250px' }}>
+    <List.Item>
       <Card actions={actions} cover={beerImage()}>
         <Card.Meta
           title={beer.name === '-' ? `${beer.style} ${beer.origin}` : beer.name}
