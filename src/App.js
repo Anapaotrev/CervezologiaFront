@@ -6,6 +6,7 @@ import { BeerMap } from './components/Map'
 import { Navbar } from './components/Navbar';
 import { Login } from './components/Login';
 import { Register } from './components/Register';
+import { Diary } from './components/Diary';
 import UserContextProvider from './utils/userContext';
 import './App.scss';
 import 'antd/dist/antd.css';
@@ -36,6 +37,9 @@ function App() {
               </Route>
               <Route path="/map" exact>
                 <BeerMap />
+              </Route>
+              <Route path="/diary" exact>
+                <Diary />
               </Route>
             </Switch>
           </Content>

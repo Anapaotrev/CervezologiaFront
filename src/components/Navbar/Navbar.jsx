@@ -14,7 +14,7 @@ const Navbar = (props) => {
 
   return (
     <Row align="middle">
-      <Col span={18}>
+      <Col span={16}>
         <img src={ require('../../assets/logo-color.png') } className="logo"/>
         <Text style={{ paddingTop: '5px', fontWeight: '800', fontSize: '20px', color: '#000000' }}>
           Cervezología MX
@@ -30,8 +30,13 @@ const Navbar = (props) => {
           <Link to="/" className="link">HOME</Link>
         </Menu.Item>
         <Menu.Item key='/map'>
-          <Link to="/map" className="link">MAP</Link>
+          <Link to="/map" className="link">MAPA</Link>
         </Menu.Item>
+        { !isAuth() && 
+        <Menu.Item key='/diary'>
+          <Link to="/diary" className="link">DIARIO</Link>
+        </Menu.Item>
+        }
         <Menu.Item key='/login'>
         {isAuth() ? (
           <Link onClick={() => setUnauthStatus()}>LOGOUT</Link>
