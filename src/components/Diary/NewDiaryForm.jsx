@@ -99,13 +99,14 @@ const NewDiaryForm = () => {
           </Form.Item>
           <Form.Item name="abv" label="ABV">
             <Slider
-              max={15}
+              max={20}
               step={0.1}
               marks={{
                 0: '0',
                 5: '5',
                 10: '10',
                 15: '15',
+                20: '20'
               }}
             />
           </Form.Item>
