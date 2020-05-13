@@ -1,4 +1,5 @@
-import { Card, Typography, message, Layout, Row, Col, Descriptions, Progress } from 'antd';
+import { Typography, message, Layout, Row, Col, Descriptions, Progress, Button } from 'antd';
+import { FormOutlined, StarOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-const beerAtt = ['brewery', 'origin', 'style'];
+const beerAtt = [['brewery', 'Cervecería'], ['origin', 'Origen'], ['style', 'Estilo']];
 
 const beercolors = [
   '#F3F993',
@@ -95,47 +96,52 @@ const BeerDetail = () => {
       </Title>
       <Content className="beers-box">
         <Row>
-          <Col
-            sm={5}
-            className="beer-image-detail"
-            style={{
-              backgroundImage: `url(${beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'})`,
-              height: '500px',
-              marginRight: '15px',
-            }}
-          ></Col>
-          <Col sm={15}>
-            <Descriptions title="Información">
+          <Col sm={4} className="beer-image-detail">
+            <img className="beer-image" src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'}/>
+          </Col>
+          <Col sm={5}>
+            <Descriptions title="Información" column={1} style={{marginTop: "25px"}}>
               {beerAtt.map((attribute) => (
-                <Descriptions.Item className="beers-detail" label={attribute.toUpperCase()}>
-                  {beer[attribute]}
+                <Descriptions.Item className="beers-detail" label={attribute[1]}>
+                  {beer[attribute[0]]}
                 </Descriptions.Item>
               ))}
-
-
-              <Descriptions.Item className="beers-graph">
-                <Progress
-                  type="circle"
-                  width={230}
-                  strokeWidth={8}
-                  strokeColor={beerColor}
-                  percent={(beer.srm / 30) * 100}
-                  format={(percent) => `SRM: ${fillMissingValues(beer.srm)} `}
-                />
-              </Descriptions.Item>
-
-
-              <Descriptions.Item className="beers-graph">
-                <Progress
-                  type="circle"
-                  width={230}
-                  strokeWidth={8}
-                  strokeColor={beerColor}
-                  percent={(beer.abv*100/15)%100}
-                  format={(percent) => `ABV: ${fillMissingValues(beer.abv)}%`}
-                />
-              </Descriptions.Item>
             </Descriptions>
+          </Col>
+          <Col sm={11}>
+            <Progress
+              className="circular-progress"
+              type="circle"
+              width={135}
+              strokeWidth={6}
+              strokeColor={beerColor}
+              percent={(beer.abv*100/20)%100}
+              format={(percent) => `ABV: ${fillMissingValues(beer.abv)}%`}
+            />
+
+            <Progress
+              className="circular-progress"
+              type="circle"
+              width={135}
+              strokeWidth={6}
+              strokeColor={beerColor}
+              percent={(beer.srm / 40) * 100}
+              format={(percent) => `SRM: ${fillMissingValues(beer.srm)} `}
+            />
+
+            <Progress
+              className="circular-progress"
+              type="circle"
+              width={135}
+              strokeWidth={6}
+              strokeColor={beerColor}
+              percent={(beer.ibu)}
+              format={(percent) => `IBU: ${fillMissingValues(beer.ibu)} `}
+            />
+          </Col>
+          <Col sm={3} className="buttons-detail">
+            <Button type="default" style={{marginBottom:"10px"}}>Agregar al diario<FormOutlined /></Button>
+            <Button type="default" style={{width:"156.7px"}}>Lista de interés<StarOutlined /></Button>
           </Col>
         </Row>
       </Content>
