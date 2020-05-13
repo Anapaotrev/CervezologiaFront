@@ -1,5 +1,5 @@
 import { Form, Input, Button, Rate, Slider, Upload } from 'antd';
-import { Layout, Row, Col, Modal, message, Carousel } from 'antd';
+import { Layout, Row, Col, Modal, message } from 'antd';
 import { UploadOutlined, FormOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -25,32 +25,6 @@ function normFile(e) {
   }
   return e && e.fileList;
 };
-
-const Photos = () => (
-  <Carousel autoplay>
-    <div>
-      <img
-        height={200}
-        alt="beer"
-        src="https://i.imgur.com/B9vHlLa.jpg"
-      />
-    </div>
-    <div>
-      <img
-        height={200}
-        alt="beer"
-        src="https://i.imgur.com/lyiN6PC.jpg"
-      />
-    </div>
-    <div>
-      <img
-        height={200}
-        alt="beer"
-        src="https://i.imgur.com/gdJRt9v.jpg"
-      />
-    </div>
-  </Carousel>
-);
  
 const NewDiaryForm = () => {
 
@@ -184,7 +158,7 @@ const NewDiaryForm = () => {
             </Upload>
           </Form.Item>
           <Form.Item name="rating" label="Calificación">
-              <Photos />
+              <Rate allowHalf/>
           </Form.Item>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 17 }}>
             <Button type="primary" htmlType="submit">
