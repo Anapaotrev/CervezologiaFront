@@ -101,7 +101,7 @@ const BeerDetail = () => {
       <Content className="beers-box">
         <Row>
           <Col sm={4} className="beer-image-detail">
-            <img className="beer-image" src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'} />
+            <img src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'} style={{height:"270px"}}/>
           </Col>
           <Col sm={5}>
             <Descriptions title="Información" column={1} style={{ marginTop: '25px' }}>
