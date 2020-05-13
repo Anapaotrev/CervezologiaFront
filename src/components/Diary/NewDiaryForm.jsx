@@ -1,7 +1,8 @@
 import { Form, Input, Button, Rate, Slider, Upload } from 'antd';
-import { Layout, Row, Col, Modal } from 'antd';
+import { Layout, Row, Col, Modal, message, Carousel } from 'antd';
 import { UploadOutlined, FormOutlined } from '@ant-design/icons';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const { Header } = Layout;
 
@@ -22,21 +23,66 @@ function normFile(e) {
   if (Array.isArray(e)) {
     return e;
   }
-
   return e && e.fileList;
 };
+
+const Photos = () => (
+  <Carousel autoplay>
+    <div>
+      <img
+        height={200}
+        alt="beer"
+        src="https://i.imgur.com/B9vHlLa.jpg"
+      />
+    </div>
+    <div>
+      <img
+        height={200}
+        alt="beer"
+        src="https://i.imgur.com/lyiN6PC.jpg"
+      />
+    </div>
+    <div>
+      <img
+        height={200}
+        alt="beer"
+        src="https://i.imgur.com/gdJRt9v.jpg"
+      />
+    </div>
+  </Carousel>
+);
  
 const NewDiaryForm = () => {
 
   const [visible, setVisible] = useState(false);
 
   function handleCancel(e) {
-    console.log(e);
     setVisible(false);
   };
 
   const onFinish = values => {
-    console.log(values);
+    var diaryPost = values;
+    if(values.newBeer.photos) {
+      const photos = values.newBeer.photos.map(function(o) { return o.thumbUrl; });
+      diaryPost.newBeer.photos = photos;
+    }
+    console.log(diaryPost);
+
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': ''
+      }
+    }
+
+    axios.post('/diary', diaryPost, options)
+    .then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+      message.error(error.statusText)
+    });
+
     setVisible(false);
   };
 
@@ -63,7 +109,7 @@ const NewDiaryForm = () => {
         validateMessages={validateMessages}
         >
           <Form.Item
-            name='beer'
+            name={['newBeer', 'name']} 
             label="Cerveza"
             rules={[
               {
@@ -74,18 +120,18 @@ const NewDiaryForm = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name='style'
+            name={['newBeer', 'style']} 
             label="Estilo"
           >
             <Input />
           </Form.Item>
           <Form.Item
-            name='origin'
+            name={['newBeer', 'origin']} 
             label="Origen"
           >
             <Input />
           </Form.Item>
-          <Form.Item name="srm" label="SRM">
+          <Form.Item name={['newBeer', 'srm']}  label="SRM">
             <Slider
               max={40}
               marks={{
@@ -97,7 +143,7 @@ const NewDiaryForm = () => {
               }}
             />
           </Form.Item>
-          <Form.Item name="abv" label="ABV">
+          <Form.Item name={['newBeer', 'abv']} label="ABV">
             <Slider
               max={20}
               step={0.1}
@@ -110,7 +156,7 @@ const NewDiaryForm = () => {
               }}
             />
           </Form.Item>
-          <Form.Item name="ibu" label="IBU">
+          <Form.Item name={['newBeer', 'ibu']}  label="IBU">
             <Slider
               marks={{
                 0: '0',
@@ -126,7 +172,7 @@ const NewDiaryForm = () => {
             <Input.TextArea />
           </Form.Item>
           <Form.Item
-            name="photos"
+            name={['newBeer', 'photos']} 
             label="Foto"
             valuePropName="fileList"
             getValueFromEvent={normFile}
@@ -137,8 +183,8 @@ const NewDiaryForm = () => {
               </Button>
             </Upload>
           </Form.Item>
-          <Form.Item name="rate" label="Calificación">
-            <Rate allowHalf />
+          <Form.Item name="rating" label="Calificación">
+              <Photos />
           </Form.Item>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 17 }}>
             <Button type="primary" htmlType="submit">

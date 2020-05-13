@@ -32,7 +32,7 @@ const Navbar = (props) => {
         <Menu.Item key='/map'>
           <Link to="/map" className="link">MAPA</Link>
         </Menu.Item>
-        { !isAuth() && 
+        { isAuth() && 
         <Menu.Item key='/diary'>
           <Link to="/diary" className="link">DIARIO</Link>
         </Menu.Item>
