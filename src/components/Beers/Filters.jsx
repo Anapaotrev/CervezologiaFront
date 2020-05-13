@@ -1,9 +1,10 @@
-import { Select, Row, Col, Typography, Drawer, Button, Layout, message } from 'antd';
+import { Select, Row, Col, Typography, Drawer, Button, Layout, message, Input } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
 const { Title } = Typography;
+const { Search } = Input;
 const { Header } = Layout;
 
 const Filters = (props) => {
@@ -68,18 +69,25 @@ const Filters = (props) => {
       brewery: filterBrewery,
       style: filterStyle
     }
-    props.onSearch(filter);
+    props.onFilter(filter);
     setVisible(false)
   }
 
   return(
     <Header>
       <Row>
-        <Col span={22}>
+        <Col span={18}>
           <h2 className="beers-title">Cervezas</h2>
         </Col>
+        <Col span={4}>
+          <Search
+            placeholder="Buscar cerveza"
+            onSearch={value => props.onSearch(value)}
+            style={{ width: 150, lineHeight: "30px" }}
+          />
+        </Col>
         <Col span={2}>
-            <Button type="primary" onClick={() => setVisible(true)}>Filter <FilterOutlined /></Button>
+            <Button type="primary" onClick={() => setVisible(true)}>Filtrar <FilterOutlined /></Button>
         </Col>
       </Row>
       <Drawer
@@ -94,12 +102,12 @@ const Filters = (props) => {
       >
         <Row>
           <Col span={8}>
-            Brewery
+            Cervecería
             <Select
               showSearch
               style={{ width: 250, marginLeft: 10 }}
               mode={"multiple"}
-              placeholder="Select a brewery"
+              placeholder="Selecciona una cervecería"
               optionFilterProp="children"
               onChange={onChangeBrewery}
               filterOption={(input, option) =>
@@ -112,12 +120,12 @@ const Filters = (props) => {
             </Select>
           </Col>
           <Col span={8}>
-            Origin
+            Origen
             <Select
               showSearch
               style={{ width: 250, marginLeft: 10 }}
               mode={"multiple"}
-              placeholder="Select a city"
+              placeholder="Selecciona una ciudad"
               optionFilterProp="children"
               onChange={onChangeOrigin}
               filterOption={(input, option) =>
@@ -130,12 +138,12 @@ const Filters = (props) => {
             </Select>
           </Col>
           <Col span={8}>
-            Style
+            Estilo
             <Select
               showSearch
               style={{ width: 250, marginLeft: 10 }}
               mode={"multiple"}
-              placeholder="Select a style"
+              placeholder="Selecciona un estilo"
               optionFilterProp="children"
               onChange={onChangeStyle}
               filterOption={(input, option) =>

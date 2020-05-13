@@ -27,7 +27,7 @@ const Navbar = (props) => {
         style={{ backgroundColor: 'rgb(240,242,245)'}}
       >
         <Menu.Item key='/'> 
-          <Link to="/" className="link">HOME</Link>
+          <Link to="/" className="link">CATALOGO</Link>
         </Menu.Item>
         <Menu.Item key='/map'>
           <Link to="/map" className="link">MAPA</Link>
