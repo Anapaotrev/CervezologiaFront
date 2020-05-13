@@ -1,18 +1,20 @@
-import { Typography, message, Layout, Row, Col, Descriptions, Progress, Button } from 'antd';
-import { FormOutlined, StarOutlined } from '@ant-design/icons';
+import { Typography, message, Layout, Row, Col, Descriptions, Progress, Button, Modal } from 'antd';
+import { FormOutlined, StarOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { NewDiaryForm } from '../Diary';
 import './style.scss';
 import 'antd/dist/antd.css';
-
-import {ArrowLeftOutlined} from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-const beerAtt = [['brewery', 'Cervecería'], ['origin', 'Origen'], ['style', 'Estilo']];
+const beerAtt = [
+  ['brewery', 'Cervecería'],
+  ['origin', 'Origen'],
+  ['style', 'Estilo'],
+];
 
 const beercolors = [
   '#F3F993',
@@ -56,15 +58,15 @@ function fillMissingValues(val) {
 }
 
 const BeerDetail = () => {
-
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   const history = useHistory();
 
   const { _id } = useParams();
   const [beer, setBeer] = useState({});
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     axios
@@ -81,28 +83,30 @@ const BeerDetail = () => {
 
   if (!beer.srm) {
     beerColor = beercolors[0];
-  } else if(beer.srm >= 30){
+  } else if (beer.srm >= 30) {
     beerColor = beercolors[29];
-  }
-  else{
+  } else {
     beerColor = beercolors[Math.floor(beer.srm - 1)];
   }
 
   return (
     <Layout>
+      <Modal footer={null} visible={visible} onCancel={() => setVisible(false)}>
+        <NewDiaryForm beer={beer._id} name={beer.name} />
+      </Modal>
       <Title className="beers-title" level={1}>
-        <ArrowLeftOutlined onClick={() => history.push(``)} style = {{marginRight: '50px'}}/>
+        <ArrowLeftOutlined onClick={() => history.push(``)} style={{ marginRight: '50px' }} />
         {beer.name}
       </Title>
       <Content className="beers-box">
         <Row>
           <Col sm={4} className="beer-image-detail">
-            <img className="beer-image" src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'}/>
+            <img className="beer-image" src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'} />
           </Col>
           <Col sm={5}>
-            <Descriptions title="Información" column={1} style={{marginTop: "25px"}}>
+            <Descriptions title="Información" column={1} style={{ marginTop: '25px' }}>
               {beerAtt.map((attribute) => (
-                <Descriptions.Item className="beers-detail" label={attribute[1]}>
+                <Descriptions.Item key={attribute[1]} className="beers-detail" label={attribute[1]}>
                   {beer[attribute[0]]}
                 </Descriptions.Item>
               ))}
@@ -115,8 +119,8 @@ const BeerDetail = () => {
               width={135}
               strokeWidth={6}
               strokeColor={beerColor}
-              percent={(beer.abv*100/20)%100}
-              format={(percent) => `ABV: ${fillMissingValues(beer.abv)}%`}
+              percent={((beer.abv * 100) / 20) % 100}
+              format={() => `ABV: ${fillMissingValues(beer.abv)}%`}
             />
 
             <Progress
@@ -126,7 +130,7 @@ const BeerDetail = () => {
               strokeWidth={6}
               strokeColor={beerColor}
               percent={(beer.srm / 40) * 100}
-              format={(percent) => `SRM: ${fillMissingValues(beer.srm)} `}
+              format={() => `SRM: ${fillMissingValues(beer.srm)} `}
             />
 
             <Progress
@@ -135,13 +139,23 @@ const BeerDetail = () => {
               width={135}
               strokeWidth={6}
               strokeColor={beerColor}
-              percent={(beer.ibu)}
-              format={(percent) => `IBU: ${fillMissingValues(beer.ibu)} `}
+              percent={beer.ibu}
+              format={() => `IBU: ${fillMissingValues(beer.ibu)} `}
             />
           </Col>
           <Col sm={3} className="buttons-detail">
-            <Button type="default" style={{marginBottom:"10px"}}>Agregar al diario<FormOutlined /></Button>
-            <Button type="default" style={{width:"156.7px"}}>Lista de interés<StarOutlined /></Button>
+            <Button
+              type="default"
+              style={{ marginBottom: '10px' }}
+              onClick={() => setVisible(true)}
+            >
+              Agregar al diario
+              <FormOutlined />
+            </Button>
+            <Button type="default" style={{ width: '156.7px' }}>
+              Lista de interés
+              <StarOutlined />
+            </Button>
           </Col>
         </Row>
       </Content>

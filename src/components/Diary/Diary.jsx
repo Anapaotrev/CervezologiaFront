@@ -1,24 +1,11 @@
-import { Layout, List, Carousel, Space, Rate } from 'antd';
-import React from 'react';
-import "./style.scss";
-import { NewDiaryForm } from './NewDiaryForm';
+import { Layout, List, Carousel, Space, Rate, message, Popconfirm } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { DeleteOutlined } from '@ant-design/icons';
+import axios from '../../utils/axios';
+import './style.scss';
+import { NewDiary } from './NewDiary';
 
 const { Content } = Layout;
-
-const listData = [];
-for (let i = 0; i < 6; i++) {
-  listData.push({
-    beer: "Cerveza artesanal",
-    style: "Porter",
-    origin: "Monterrey",
-    srm: 28,
-    abv: 5.3,
-    ibu: 35,
-    notes: "Muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor, muy buena cerveza me gusta mucho el sabor",
-    photos: ["https://i.imgur.com/B9vHlLa.jpg", "https://i.imgur.com/lyiN6PC.jpg", "https://i.imgur.com/gdJRt9v.jpg"],
-    rate: 3.5
-  })
-}
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -27,40 +14,55 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 
-const Desc = ({style, origin}) => (
+const Desc = ({ style, origin }) => (
   <Space>
     <b>Estilo: </b> {style} <b>Origen: </b> {origin}
   </Space>
 );
 
 const Photos = () => (
-  <Carousel> 
+  <Carousel>
     <div>
-      <img
-        alt="beer"
-        src="https://i.imgur.com/B9vHlLa.jpg"
-      />
+      <img alt="beer" src="https://i.imgur.com/B9vHlLa.jpg" />
     </div>
     <div>
-      <img
-        alt="beer"
-        src="https://i.imgur.com/lyiN6PC.jpg"
-      />
+      <img alt="beer" src="https://i.imgur.com/lyiN6PC.jpg" />
     </div>
     <div>
-      <img
-        alt="beer"
-        src="https://i.imgur.com/gdJRt9v.jpg"
-      />
+      <img alt="beer" src="https://i.imgur.com/gdJRt9v.jpg" />
     </div>
   </Carousel>
 );
 
 const Diary = () => {
+  const [diaries, setDiaries] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('/diaries')
+      .then((response) => {
+        setDiaries(response.data);
+      })
+      .catch((error) => {
+        message.error(error.message);
+      });
+  }, []);
+
+  const deleteDiary = (id) => {
+    axios
+      .delete(`/diary/${id}`)
+      .then((response) => {
+        setDiaries(diaries.filter((entry) => entry._id != id));
+        message.info('Entrada borrada');
+      })
+      .catch((error) => {
+        message.error(error.message);
+      });
+  };
 
   return (
     <Layout>
-      <NewDiaryForm />
+      <NewDiary />
       <Content>
         <List
           className="diary-posts"
@@ -69,23 +71,47 @@ const Diary = () => {
           pagination={{
             pageSize: 4,
           }}
-          dataSource={listData}
-          renderItem={item => (
-            <List.Item
-              key={item.title}
-              extra={
-                <Photos />
-              }
-            >
-              <List.Item.Meta
-                title={item.beer}
-                description={<Desc style={item.style} origin={item.origin} />}
-              />
-              <Rate disabled allowHalf defaultValue={item.rate} style={{marginBottom: '7px'}} /> <br></br>
-              <p> <b>ABV: </b> {item.abv} <b>SRM: </b> {item.srm} <b>IBU: </b> {item.ibu} </p>
-              {item.notes}
-            </List.Item>
-          )}
+          dataSource={diaries}
+          renderItem={(item) => {
+            let { beer } = item;
+            if (!beer) {
+              beer = item.newBeer;
+            }
+            return (
+              <List.Item
+                key={item.title}
+                extra={<Photos />}
+                actions={[
+                  <Popconfirm
+                    key="borrar"
+                    placement="bottom"
+                    title={'Deseas borrar esta entrada?'}
+                    onConfirm={() => deleteDiary(item._id)}
+                    okText="Borrar"
+                    cancelText="Cancelar"
+                  >
+                    <DeleteOutlined style={{ fontSize: 20 }} />
+                  </Popconfirm>,
+                ]}
+              >
+                <List.Item.Meta
+                  title={beer.name}
+                  description={<Desc style={beer.style} origin={beer.origin} />}
+                />
+                <Rate
+                  disabled
+                  allowHalf
+                  defaultValue={item.rating}
+                  style={{ marginBottom: '7px' }}
+                />
+                <br></br>
+                <p>
+                  <b>ABV: </b> {beer.abv} <b>SRM: </b> {beer.srm} <b>IBU: </b> {beer.ibu}
+                </p>
+                {item.notes}
+              </List.Item>
+            );
+          }}
         />
       </Content>
     </Layout>
