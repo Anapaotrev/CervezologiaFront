@@ -63,7 +63,7 @@ const NewDiary = () => {
         <Col span={3}>
           <Button type="primary" onClick={() => setVisible(true)}>
             Nueva entrada
-            <FormOutlined onFinish={onFinish}/>
+            <FormOutlined onFinish={onFinish} />
           </Button>
         </Col>
       </Row>
