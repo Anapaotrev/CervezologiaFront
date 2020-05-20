@@ -20,20 +20,6 @@ const Desc = ({ style, origin }) => (
   </Space>
 );
 
-const Photos = () => (
-  <Carousel>
-    <div>
-      <img alt="beer" src="https://i.imgur.com/B9vHlLa.jpg" />
-    </div>
-    <div>
-      <img alt="beer" src="https://i.imgur.com/lyiN6PC.jpg" />
-    </div>
-    <div>
-      <img alt="beer" src="https://i.imgur.com/gdJRt9v.jpg" />
-    </div>
-  </Carousel>
-);
-
 const Diary = () => {
   const [diaries, setDiaries] = useState([]);
 
@@ -80,7 +66,7 @@ const Diary = () => {
             return (
               <List.Item
                 key={item.title}
-                extra={<Photos />}
+                extra={<img alt="beer" src={beer.photoUrl} style={{width:'180px'}}/>}
                 actions={[
                   <Popconfirm
                     key="borrar"

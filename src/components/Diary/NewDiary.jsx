@@ -35,23 +35,20 @@ const NewDiary = () => {
 
   const onFinish = (values) => {
     const diaryPost = values;
-    if (values.newBeer.photos) {
-      const photos = values.newBeer.photos.map(function (o) {
-        return o.thumbUrl;
-      });
-      diaryPost.newBeer.photos = photos;
+    if (values.newBeer.photoUrl) {
+      const photo = values.newBeer.photoUrl[0].thumbUrl
+      diaryPost.newBeer.photoUrl = photo;
     }
 
     axios
       .post('/diary', diaryPost)
       .then((response) => {
         console.log(response);
+        window.location.reload(false);
       })
       .catch((error) => {
         message.error(error.statusText);
       });
-
-    setVisible(false);
   };
 
   return (
