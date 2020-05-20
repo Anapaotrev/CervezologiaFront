@@ -11,7 +11,22 @@ const Beers = () => {
 
   
   const [beers, setBeers] = useState([]);
+  const [beersCopy, setBeersCopy] = useState([]);
   const [filter, setFilter] = useState({});
+
+  function search(beer, value) {
+    return beer.name.toLowerCase().includes(value.toLowerCase());
+  }
+
+  function searchBeer(value) {
+    if (value != "") {
+      setBeersCopy(beers);
+      var filteredBeers = beers.filter((beer) => search(beer, value));
+      setBeers(filteredBeers);
+    } else {
+      setBeers(beersCopy);
+    }
+  }
 
   useEffect(() => {
   axios.get('/beers', {
@@ -23,6 +38,7 @@ const Beers = () => {
   })
   .then((response) => {
     setBeers(response.data);
+    setBeersCopy(response.data);
   }).catch((error) => {
     message.error(error.statusText)
   });
@@ -30,7 +46,7 @@ const Beers = () => {
 
   return (
     <Layout>
-      <Filters onSearch={setFilter}/>
+      <Filters onFilter={setFilter} onSearch={searchBeer}/>
       <Content className="beers-content">
         <Row>
           <Col>

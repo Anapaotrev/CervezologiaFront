@@ -27,21 +27,19 @@
 
 .beer-image {
   background-size: cover;
-  background-position: center;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
+  background-position: center;	
+  height: 100%;	
+  margin-left: auto;	
+  margin-right: auto;	
+  display: block;	
   width: 100%;
 }
 
 .beer-image-detail {
   background-size: cover;
   background-position: center;
-  height: 200px;
-  margin-right: auto;
-  margin-top: auto;
   margin-bottom: auto;
+  margin-right: 10px;
   display: block;
   width: 50%;
 }
@@ -51,10 +49,8 @@
 }
 
 .beers-detail{
-  background-color: $secondary-background !important;
   padding: 10px 10px 50px 10px !important;
   height: 10px;
-  font-weight: 600 !important;
   float:left;
 }
 
@@ -78,4 +74,16 @@
 .beer-container {
   box-shadow: 4px 20px 53px -16px rgba(0,0,0,0.48);
   border-radius: 20px 20px 20px 20px;
+}
+
+.circular-progress {
+  margin: 63px 25px 0 0 !important;
+}
+
+.ant-progress-text {
+  font-size: 0.75em !important;
+}
+
+.buttons-detail {
+  margin-top: 8%;
 }

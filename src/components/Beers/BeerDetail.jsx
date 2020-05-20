@@ -1,17 +1,20 @@
-import { Card, Typography, message, Layout, Row, Col, Descriptions, Progress } from 'antd';
+import { Typography, message, Layout, Row, Col, Descriptions, Progress, Button, Modal } from 'antd';
+import { FormOutlined, StarOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { NewDiaryForm } from '../Diary';
 import './style.scss';
 import 'antd/dist/antd.css';
-
-import {ArrowLeftOutlined} from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
 
-const beerAtt = ['brewery', 'origin', 'style'];
+const beerAtt = [
+  ['brewery', 'Cervecería'],
+  ['origin', 'Origen'],
+  ['style', 'Estilo'],
+];
 
 const beercolors = [
   '#F3F993',
@@ -55,15 +58,15 @@ function fillMissingValues(val) {
 }
 
 const BeerDetail = () => {
-
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   const history = useHistory();
 
   const { _id } = useParams();
   const [beer, setBeer] = useState({});
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     axios
@@ -80,62 +83,79 @@ const BeerDetail = () => {
 
   if (!beer.srm) {
     beerColor = beercolors[0];
-  } else if(beer.srm >= 30){
+  } else if (beer.srm >= 30) {
     beerColor = beercolors[29];
-  }
-  else{
+  } else {
     beerColor = beercolors[Math.floor(beer.srm - 1)];
   }
 
   return (
     <Layout>
+      <Modal footer={null} visible={visible} onCancel={() => setVisible(false)}>
+        <NewDiaryForm beer={beer._id} name={beer.name} />
+      </Modal>
       <Title className="beers-title" level={1}>
-        <ArrowLeftOutlined onClick={() => history.push(``)} style = {{marginRight: '50px'}}/>
+        <ArrowLeftOutlined onClick={() => history.push(``)} style={{ marginRight: '50px' }} />
         {beer.name}
       </Title>
       <Content className="beers-box">
         <Row>
-          <Col
-            sm={5}
-            className="beer-image-detail"
-            style={{
-              backgroundImage: `url(${beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'})`,
-              height: '500px',
-              marginRight: '15px',
-            }}
-          ></Col>
-          <Col sm={15}>
-            <Descriptions title="Información">
+          <Col sm={4} className="beer-image-detail">
+            <img src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'} style={{height:"270px"}}/>
+          </Col>
+          <Col sm={5}>
+            <Descriptions title="Información" column={1} style={{ marginTop: '25px' }}>
               {beerAtt.map((attribute) => (
-                <Descriptions.Item className="beers-detail" label={attribute.toUpperCase()}>
-                  {beer[attribute]}
+                <Descriptions.Item key={attribute[1]} className="beers-detail" label={attribute[1]}>
+                  {beer[attribute[0]]}
                 </Descriptions.Item>
               ))}
-
-
-              <Descriptions.Item className="beers-graph">
-                <Progress
-                  type="circle"
-                  width={230}
-                  strokeWidth={8}
-                  strokeColor={beerColor}
-                  percent={(beer.srm / 30) * 100}
-                  format={(percent) => `SRM: ${fillMissingValues(beer.srm)} `}
-                />
-              </Descriptions.Item>
-
-
-              <Descriptions.Item className="beers-graph">
-                <Progress
-                  type="circle"
-                  width={230}
-                  strokeWidth={8}
-                  strokeColor={beerColor}
-                  percent={(beer.abv*100/15)%100}
-                  format={(percent) => `ABV: ${fillMissingValues(beer.abv)}%`}
-                />
-              </Descriptions.Item>
             </Descriptions>
+          </Col>
+          <Col sm={11}>
+            <Progress
+              className="circular-progress"
+              type="circle"
+              width={135}
+              strokeWidth={6}
+              strokeColor={beerColor}
+              percent={((beer.abv * 100) / 20) % 100}
+              format={() => `ABV: ${fillMissingValues(beer.abv)}%`}
+            />
+
+            <Progress
+              className="circular-progress"
+              type="circle"
+              width={135}
+              strokeWidth={6}
+              strokeColor={beerColor}
+              percent={(beer.srm / 40) * 100}
+              format={() => `SRM: ${fillMissingValues(beer.srm)} `}
+            />
+
+            <Progress
+              className="circular-progress"
+              type="circle"
+              width={135}
+              strokeWidth={6}
+              strokeColor={beerColor}
+              percent={beer.ibu}
+              format={() => `IBU: ${fillMissingValues(beer.ibu)} `}
+            />
+          </Col>
+          <Col sm={3} className="buttons-detail">
+            <Button
+              type="default"
+              style={{ marginBottom: '10px' }}
+              onClick={() => setVisible(true)}
+            >
+              Agregar al diario
+              <FormOutlined />
+            </Button>
+            <Button type="default" style={{ width: '156.7px' }}>
+              Lista de interés
+              <StarOutlined />
+            </Button>
           </Col>
         </Row>
       </Content>
