@@ -19,23 +19,29 @@ const validateMessages = {
   required: '${label} is required!',
 };
 
-function normFile(e) {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e && e.fileList;
-}
-
 const NewDiaryForm = (props) => {
   const [visible, setVisible] = useState(false);
+  const [file, setFile] = useState(false);
+
+  function normFile(e) {
+    console.log(e);
+    if(e.fileList.length >= 1) {
+      setFile(true);
+    } else {
+      setFile(false);
+    }
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  }
 
   const onFinish = (values) => {
     const diaryPost = values;
-    if (values.newBeer && values.newBeer.photos) {
-      const photos = values.newBeer.photos.map(function (o) {
-        return o.thumbUrl;
-      });
-      diaryPost.newBeer.photos = photos;
+    console.log(values);
+    if (values.newBeer && values.newBeer.photoUrl) {
+      const photo = values.newBeer.photoUrl[0].thumbUrl
+      diaryPost.newBeer.photoUrl = photo;
     }
 
     if (props.beer) {
@@ -46,13 +52,18 @@ const NewDiaryForm = (props) => {
       .post('/diary', diaryPost)
       .then((response) => {
         message.success("Cerveza agregada correctamente!");
+        window.location.reload(false);
       })
       .catch((error) => {
         message.error(error.statusText);
       });
-
-    setVisible(false);
   };
+
+  const uploadButton = (
+    <Button>
+      <UploadOutlined /> Subir imagen
+    </Button>
+  );
 
   const beerInput = props.beer ? (
     <>
@@ -117,19 +128,18 @@ const NewDiaryForm = (props) => {
         />
       </Form.Item>
       <Form.Item
-        name={['newBeer', 'photos']}
+        name={['newBeer', 'photoUrl']}
         label="Foto"
         valuePropName="fileList"
         getValueFromEvent={normFile}
       >
         <Upload
-          name="photos"
+          name="photoUrl"
           action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          accept=".png,.jpg,.jpeg"
           listType="picture"
         >
-          <Button>
-            <UploadOutlined /> Subir imagen
-          </Button>
+          {file ? null : uploadButton} 
         </Upload>
       </Form.Item>
     </>
@@ -138,10 +148,24 @@ const NewDiaryForm = (props) => {
   return (
     <Form {...layout} name="entrada-diario" onFinish={onFinish} validateMessages={validateMessages}>
       {beerInput}
-      <Form.Item name="notes" label="Notas">
+      <Form.Item name="notes" 
+        label="Notas"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
         <Input.TextArea />
       </Form.Item>
-      <Form.Item name="rating" label="Calificación">
+      <Form.Item name="rating" 
+        label="Calificación"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
         <Rate allowHalf />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 17 }}>
