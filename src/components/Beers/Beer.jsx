@@ -1,13 +1,16 @@
 import { EyeOutlined, FormOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
 import { Card, List, Tooltip, Modal, message } from 'antd';
 import { NewDiaryForm } from '../Diary';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { UserContext } from '../../utils';
 import './style.scss';
 import axios from '../../utils/axios';
 
 const Beer = ({ beer, listaIds, onChange }) => {
   const history = useHistory();
+
+  const { isAuth, setUnauthStatus } = useContext(UserContext);
 
   const [visible, setVisible] = useState(false);
   
@@ -57,7 +60,7 @@ const Beer = ({ beer, listaIds, onChange }) => {
     onChange(fixingIds);
   }
 
-  const actions = [
+  const actions = isAuth() ? [
     <Tooltip title="Ver detalle">
       <EyeOutlined 
         onClick={() => 
@@ -72,6 +75,20 @@ const Beer = ({ beer, listaIds, onChange }) => {
       <FormOutlined onClick={() => setVisible(true)}/>
     </Tooltip>,
     <InterestList />,
+  ] : [
+    <Tooltip title="Ver detalle">
+      <EyeOutlined 
+        onClick={() => 
+          history.push({
+            pathname: `/beer/${beer._id}`, 
+            state: { ids: listaIds }
+          })
+        } 
+      />
+    </Tooltip>,
+    <Tooltip title="Agregar al diario">
+      <FormOutlined onClick={() => setVisible(true)}/>
+    </Tooltip>,
   ];
 
   const beerImage = () => (

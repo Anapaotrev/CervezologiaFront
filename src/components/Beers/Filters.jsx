@@ -1,13 +1,16 @@
 import { Select, Row, Col, Typography, Drawer, Button, Layout, message, Input } from 'antd';
 import { FilterOutlined, StarOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../utils';
 
 const { Title } = Typography;
 const { Search } = Input;
 const { Header } = Layout;
 
 const Filters = (props) => {
+
+  const { isAuth, setUnauthStatus } = useContext(UserContext);
 
   const { Option } = Select;
   const [visible, setVisible] = useState(false);
@@ -127,9 +130,11 @@ const Filters = (props) => {
               Filtrar <FilterOutlined />
             </Button>
         </Col>
-        <Col span={2}>
+        { isAuth() && (
+          <Col span={2}>
             <BotonListaInteres />
-        </Col>
+          </Col>
+        )}
       </Row>
       <Drawer
         title="Filters"

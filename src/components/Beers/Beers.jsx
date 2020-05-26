@@ -1,17 +1,21 @@
 import { Layout, List, message, Row, Col } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Beer } from './Beer';
 import "./style.scss";
 import { Filters } from './Filters';
+import { UserContext } from '../../utils';
 
 const { Content, Footer } = Layout;
 
 const Beers = () => {
 
+  const { isAuth, setUnauthStatus } = useContext(UserContext);
+
   const [beers, setBeers] = useState([]);
   const [beersCopy, setBeersCopy] = useState([]);
   const [modified, setModified] = useState(false);
+  const [fullCatalogue, setFullCatalogue] = useState([]);
   const [filter, setFilter] = useState({});
   const [listaIds, setListaIds] = useState([]);
 
@@ -41,7 +45,7 @@ const Beers = () => {
   }
 
   function showFullList() {
-    setBeers(beersCopy);
+    setBeers(fullCatalogue);
   }
 
   useEffect(() => {
@@ -55,15 +59,18 @@ const Beers = () => {
   .then((response) => {
     setBeers(response.data);
     setBeersCopy(response.data);
+    setFullCatalogue(response.data)
   }).catch((error) => {
     message.error(error.statusText)
   });
-  axios.get('/favorites', {})
-  .then((response) => {
-    setListaIds(response.data);
-  }).catch((error) => {
-    message.error(error.statusText)
-  });
+  if(isAuth()) {
+    axios.get('/favorites', {})
+    .then((response) => {
+      setListaIds(response.data);
+    }).catch((error) => {
+      message.error(error.statusText)
+    });
+  } 
   }, [filter]);
 
   return (
