@@ -1,13 +1,16 @@
 import { Select, Row, Col, Typography, Drawer, Button, Layout, message, Input } from 'antd';
-import { FilterOutlined } from '@ant-design/icons';
+import { FilterOutlined, StarOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../utils';
 
 const { Title } = Typography;
 const { Search } = Input;
 const { Header } = Layout;
 
 const Filters = (props) => {
+
+  const { isAuth, setUnauthStatus } = useContext(UserContext);
 
   const { Option } = Select;
   const [visible, setVisible] = useState(false);
@@ -17,6 +20,7 @@ const Filters = (props) => {
   const [breweryOpts, setBrwOpts] = useState([]);
   const [originOpts, setOrigOpts] = useState([]);
   const [styleOpts, setStyleOpts] = useState([]);
+  const [listaInteres, setListaInteres] = useState(false);
 
   useEffect(() => {
     axios.get('/beers/distinct', {
@@ -73,22 +77,64 @@ const Filters = (props) => {
     setVisible(false)
   }
 
+  function showListaInteres() {
+    if (listaInteres) {
+      setListaInteres(false);
+      props.fullList();
+    } else {
+      setListaInteres(true);
+      props.interestList()
+    }
+  }
+
+  const BotonListaInteres = () => {
+    if (listaInteres) {
+      return(
+        <Button type="primary" 
+          onClick={() => showListaInteres()}
+          style={{backgroundColor:"#FCB941", borderColor:"#FCB941"}}
+          >
+            Catálogo Completo
+        </Button>
+      )
+    } else {
+      return(
+        <Button type="primary" 
+          onClick={() => showListaInteres()}
+          style={{backgroundColor:"#FCB941", borderColor:"#FCB941"}}
+          >
+            Lista de Interés <StarOutlined />
+        </Button>
+      )
+    }
+  }
+
   return(
     <Header>
       <Row>
-        <Col span={18}>
+        <Col span={8}>
           <h2 className="beers-title">Cervezas</h2>
         </Col>
-        <Col span={4}>
+        <Col span={5}>
           <Search
             placeholder="Buscar cerveza"
             onSearch={value => props.onSearch(value)}
-            style={{ width: 150, lineHeight: "30px" }}
+            style={{ width: 200, lineHeight: "30px" }}
           />
         </Col>
-        <Col span={2}>
-            <Button type="primary" onClick={() => setVisible(true)}>Filtrar <FilterOutlined /></Button>
+        <Col span={7}>
+            <Button type="primary" 
+            onClick={() => setVisible(true)}
+            style={{backgroundColor:"#60a246", borderColor:"#60a246"}}
+            >
+              Filtrar <FilterOutlined />
+            </Button>
         </Col>
+        { isAuth() && (
+          <Col span={2}>
+            <BotonListaInteres />
+          </Col>
+        )}
       </Row>
       <Drawer
         title="Filters"
