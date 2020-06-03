@@ -1,11 +1,12 @@
-import { Typography, message, Layout, Row, Col, Descriptions, Progress, Button, Modal } from 'antd';
-import { FormOutlined, StarOutlined, ArrowLeftOutlined, StarFilled } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { ArrowLeftOutlined, FormOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import { Button, Col, Descriptions, Layout, message, Modal, Progress, Row, Typography } from 'antd';
+import 'antd/dist/antd.css';
 import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { UserContext } from '../../utils';
 import { NewDiaryForm } from '../Diary';
 import './style.scss';
-import 'antd/dist/antd.css';
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -60,6 +61,7 @@ function fillMissingValues(val) {
 const BeerDetail = () => {
   const history = useHistory();
 
+  const { isAuth } = useContext(UserContext);
   const { _id } = useParams();
   const [beer, setBeer] = useState({});
   const [visible, setVisible] = useState(false);
@@ -98,6 +100,9 @@ const BeerDetail = () => {
       .catch((error) => {
         message.error(error.status);
       });
+    if (!isAuth()) {
+      return;
+    }
     axios.get('/user').then((response) => {
       setFavorites(response.data.favorites);
       if (response.data.favorites.includes(_id)) {
@@ -186,17 +191,19 @@ const BeerDetail = () => {
               format={() => `IBU: ${fillMissingValues(beer.ibu)} `}
             />
           </Col>
-          <Col sm={3} className="buttons-detail">
-            <Button
-              type="default"
-              style={{ marginBottom: '10px' }}
-              onClick={() => setVisible(true)}
-            >
-              Agregar al diario
-              <FormOutlined />
-            </Button>
-            {interestButton()}
-          </Col>
+          {isAuth() && (
+            <Col sm={3} className="buttons-detail">
+              <Button
+                type="default"
+                style={{ marginBottom: '10px' }}
+                onClick={() => setVisible(true)}
+              >
+                Agregar al diario
+                <FormOutlined />
+              </Button>
+              {interestButton()}
+            </Col>
+          )}
         </Row>
       </Content>
     </Layout>

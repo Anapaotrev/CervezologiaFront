@@ -9,7 +9,6 @@ const { Search } = Input;
 const { Header } = Layout;
 
 const Filters = (props) => {
-
   const { isAuth, setUnauthStatus } = useContext(UserContext);
 
   const { Option } = Select;
@@ -23,36 +22,42 @@ const Filters = (props) => {
   const [listaInteres, setListaInteres] = useState(false);
 
   useEffect(() => {
-    axios.get('/beers/distinct', {
-      params: {
-        value: "brewery"
-      }
-    })
-    .then((response) => {
-      setBrwOpts(response.data);
-    }).catch((error) => {
-      message.error(error.statusText)
-    });
-    axios.get('/beers/distinct', {
-      params: {
-        value: "origin"
-      }
-    })
-    .then((response) => {
-      setOrigOpts(response.data);
-    }).catch((error) => {
-      message.error(error.statusText)
-    });
-    axios.get('/beers/distinct', {
-      params: {
-        value: "style"
-      }
-    })
-    .then((response) => {
-      setStyleOpts(response.data);
-    }).catch((error) => {
-      message.error(error.statusText)
-    });
+    axios
+      .get('/beers/distinct', {
+        params: {
+          value: 'brewery',
+        },
+      })
+      .then((response) => {
+        setBrwOpts(response.data);
+      })
+      .catch((error) => {
+        message.error(error.statusText);
+      });
+    axios
+      .get('/beers/distinct', {
+        params: {
+          value: 'origin',
+        },
+      })
+      .then((response) => {
+        setOrigOpts(response.data);
+      })
+      .catch((error) => {
+        message.error(error.statusText);
+      });
+    axios
+      .get('/beers/distinct', {
+        params: {
+          value: 'style',
+        },
+      })
+      .then((response) => {
+        setStyleOpts(response.data);
+      })
+      .catch((error) => {
+        message.error(error.statusText);
+      });
   }, []);
 
   function onChangeBrewery(value) {
@@ -64,17 +69,17 @@ const Filters = (props) => {
   }
 
   function onChangeStyle(value) {
-    setStyle(value)
+    setStyle(value);
   }
 
   function onClose() {
     const filter = {
       origin: filterOrigin,
       brewery: filterBrewery,
-      style: filterStyle
-    }
+      style: filterStyle,
+    };
     props.onFilter(filter);
-    setVisible(false)
+    setVisible(false);
   }
 
   function showListaInteres() {
@@ -83,33 +88,34 @@ const Filters = (props) => {
       props.fullList();
     } else {
       setListaInteres(true);
-      props.interestList()
+      props.interestList();
     }
   }
 
   const BotonListaInteres = () => {
     if (listaInteres) {
-      return(
-        <Button type="primary" 
+      return (
+        <Button
+          type="primary"
           onClick={() => showListaInteres()}
-          style={{backgroundColor:"#FCB941", borderColor:"#FCB941"}}
-          >
-            Catálogo Completo
+          style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
+        >
+          Catálogo Completo
         </Button>
-      )
-    } else {
-      return(
-        <Button type="primary" 
-          onClick={() => showListaInteres()}
-          style={{backgroundColor:"#FCB941", borderColor:"#FCB941"}}
-          >
-            Lista de Interés <StarOutlined />
-        </Button>
-      )
+      );
     }
-  }
+    return (
+      <Button
+        type="primary"
+        onClick={() => showListaInteres()}
+        style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
+      >
+        Lista de Interés <StarOutlined />
+      </Button>
+    );
+  };
 
-  return(
+  return (
     <Header>
       <Row>
         <Col span={8}>
@@ -118,19 +124,20 @@ const Filters = (props) => {
         <Col span={5}>
           <Search
             placeholder="Buscar cerveza"
-            onSearch={value => props.onSearch(value)}
-            style={{ width: 200, lineHeight: "30px" }}
+            onSearch={(value) => props.onSearch(value)}
+            style={{ width: 200, lineHeight: '30px' }}
           />
         </Col>
         <Col span={7}>
-            <Button type="primary" 
+          <Button
+            type="primary"
             onClick={() => setVisible(true)}
-            style={{backgroundColor:"#60a246", borderColor:"#60a246"}}
-            >
-              Filtrar <FilterOutlined />
-            </Button>
+            style={{ backgroundColor: '#60a246', borderColor: '#60a246' }}
+          >
+            Filtrar <FilterOutlined />
+          </Button>
         </Col>
-        { isAuth() && (
+        {isAuth() && (
           <Col span={2}>
             <BotonListaInteres />
           </Col>
@@ -152,7 +159,7 @@ const Filters = (props) => {
             <Select
               showSearch
               style={{ width: 250, marginLeft: 10 }}
-              mode={"multiple"}
+              mode={'multiple'}
               placeholder="Selecciona una cervecería"
               optionFilterProp="children"
               onChange={onChangeBrewery}
@@ -160,7 +167,7 @@ const Filters = (props) => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
             >
-              {breweryOpts.map(item => (
+              {breweryOpts.map((item) => (
                 <Option key={item}>{item}</Option>
               ))}
             </Select>
@@ -170,7 +177,7 @@ const Filters = (props) => {
             <Select
               showSearch
               style={{ width: 250, marginLeft: 10 }}
-              mode={"multiple"}
+              mode={'multiple'}
               placeholder="Selecciona una ciudad"
               optionFilterProp="children"
               onChange={onChangeOrigin}
@@ -178,7 +185,7 @@ const Filters = (props) => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
             >
-              {originOpts.map(item => (
+              {originOpts.map((item) => (
                 <Option key={item}>{item}</Option>
               ))}
             </Select>
@@ -188,7 +195,7 @@ const Filters = (props) => {
             <Select
               showSearch
               style={{ width: 250, marginLeft: 10 }}
-              mode={"multiple"}
+              mode={'multiple'}
               placeholder="Selecciona un estilo"
               optionFilterProp="children"
               onChange={onChangeStyle}
@@ -196,7 +203,7 @@ const Filters = (props) => {
                 option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
               }
             >
-              {styleOpts.map(item => (
+              {styleOpts.map((item) => (
                 <Option key={item}>{item}</Option>
               ))}
             </Select>

@@ -88,10 +88,7 @@ const Beer = ({ beer, listaIds, onChange }) => {
               })
             }
           />
-        </Tooltip>,
-        <Tooltip title="Agregar al diario">
-          <FormOutlined onClick={() => setVisible(true)} />
-        </Tooltip>,
+        </Tooltip>
       ];
 
   const beerImage = () => (
