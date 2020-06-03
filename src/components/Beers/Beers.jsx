@@ -2,14 +2,13 @@ import { Layout, List, message, Row, Col } from 'antd';
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Beer } from './Beer';
-import "./style.scss";
+import './style.scss';
 import { Filters } from './Filters';
 import { UserContext } from '../../utils';
 
 const { Content, Footer } = Layout;
 
 const Beers = () => {
-
   const { isAuth, setUnauthStatus } = useContext(UserContext);
 
   const [beers, setBeers] = useState([]);
@@ -19,18 +18,17 @@ const Beers = () => {
   const [filter, setFilter] = useState({});
   const [listaIds, setListaIds] = useState([]);
 
-
   function search(beer, value) {
     return beer.name.toLowerCase().includes(value.toLowerCase());
   }
 
   function searchBeer(value) {
-    if (value != "") {
+    if (value != '') {
       if (!modified) {
         setModified(true);
         setBeersCopy(beers);
       }
-      var filteredBeers = beers.filter((beer) => search(beer, value));
+      const filteredBeers = beers.filter((beer) => search(beer, value));
       setBeers(filteredBeers);
     } else {
       setModified(false);
@@ -39,7 +37,7 @@ const Beers = () => {
   }
 
   function showInterestList() {
-    var interestListBeers = beers.filter((beer) => listaIds.includes(beer._id));
+    const interestListBeers = beers.filter((beer) => listaIds.includes(beer._id));
     setBeersCopy(beers);
     setBeers(interestListBeers);
   }
@@ -49,60 +47,60 @@ const Beers = () => {
   }
 
   useEffect(() => {
-  axios.get('/beers', {
-    params: {
-      origin: filter.origin,
-      brewery: filter.brewery,
-      style: filter.style
+    axios
+      .get('/beers', {
+        params: {
+          origin: filter.origin,
+          brewery: filter.brewery,
+          style: filter.style,
+        },
+      })
+      .then((response) => {
+        setBeers(response.data);
+        setBeersCopy(response.data);
+        setFullCatalogue(response.data);
+      })
+      .catch((error) => {
+        message.error(error.statusText);
+      });
+    if (isAuth()) {
+      axios
+        .get('/favorites', {})
+        .then((response) => {
+          setListaIds(response.data);
+        })
+        .catch((error) => {
+          message.error(error.statusText);
+        });
     }
-  })
-  .then((response) => {
-    setBeers(response.data);
-    setBeersCopy(response.data);
-    setFullCatalogue(response.data)
-  }).catch((error) => {
-    message.error(error.statusText)
-  });
-  if(isAuth()) {
-    axios.get('/favorites', {})
-    .then((response) => {
-      setListaIds(response.data);
-    }).catch((error) => {
-      message.error(error.statusText)
-    });
-  } 
   }, [filter]);
 
   return (
     <Layout>
-      <Filters 
-        onFilter={setFilter} 
-        onSearch={searchBeer} 
-        interestList={showInterestList} 
+      <Filters
+        onFilter={setFilter}
+        onSearch={searchBeer}
+        interestList={showInterestList}
         fullList={showFullList}
       />
       <Content className="beers-content">
         <Row>
-          <Col>
-
-          </Col>
+          <Col></Col>
         </Row>
         <Row>
           <Col sm={24}>
             <List
               grid={{
                 gutter: 16,
-                column: 6
+                column: 6,
               }}
               itemLayout="vertical"
               dataSource={beers}
               pagination={{
                 pageSize: 18,
-                showSizeChanger: false
+                showSizeChanger: false,
               }}
-              renderItem={(beer) => (
-                <Beer beer={beer} listaIds={listaIds} onChange={setListaIds}/>
-              )}
+              renderItem={(beer) => <Beer beer={beer} listaIds={listaIds} onChange={setListaIds} />}
             />
           </Col>
         </Row>

@@ -25,7 +25,7 @@ axios.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       Cookies.remove(USER_SESSION);
-      window.location.href = "/";
+      window.location.href = "/login";
     }
     return error;
   }

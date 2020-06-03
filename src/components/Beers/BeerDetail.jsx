@@ -1,5 +1,5 @@
 import { Typography, message, Layout, Row, Col, Descriptions, Progress, Button, Modal } from 'antd';
-import { FormOutlined, StarOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { FormOutlined, StarOutlined, ArrowLeftOutlined, StarFilled } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { NewDiaryForm } from '../Diary';
 import './style.scss';
 import 'antd/dist/antd.css';
 
-const { Header, Content, Footer } = Layout;
+const { Content } = Layout;
 const { Title } = Typography;
 
 const beerAtt = [
@@ -58,17 +58,38 @@ function fillMissingValues(val) {
 }
 
 const BeerDetail = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   const history = useHistory();
 
   const { _id } = useParams();
   const [beer, setBeer] = useState({});
   const [visible, setVisible] = useState(false);
+  const [enabled, setEnabled] = useState(false);
+  const [favorites, setFavorites] = useState([]);
+
+  const addToInterest = () =>
+    axios
+      .put('/user', { favorites: favorites.concat(_id) })
+      .then((response) => {
+        setFavorites(response.data.favorites);
+        setEnabled(true);
+      })
+      .catch((error) => {
+        message.error(error.statusText);
+      });
+
+  const removeInterest = () =>
+    axios
+      .put('/user', { favorites: favorites.filter((id) => id !== _id) })
+      .then((response) => {
+        setFavorites(response.data.favorites);
+        setEnabled(false);
+      })
+      .catch((error) => {
+        message.error(error.statusText);
+      });
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(`/beer/${_id}`)
       .then((response) => {
@@ -77,7 +98,26 @@ const BeerDetail = () => {
       .catch((error) => {
         message.error(error.status);
       });
+    axios.get('/user').then((response) => {
+      setFavorites(response.data.favorites);
+      if (response.data.favorites.includes(_id)) {
+        setEnabled(true);
+      }
+    });
   }, []);
+
+  const interestButton = () =>
+    enabled ? (
+      <Button type="default" style={{ width: '156.7px' }} onClick={removeInterest}>
+        Eliminar de Interes
+        <StarFilled />
+      </Button>
+    ) : (
+      <Button type="default" style={{ width: '156.7px' }} onClick={addToInterest}>
+        Lista de interés
+        <StarOutlined />
+      </Button>
+    );
 
   let beerColor;
 
@@ -101,7 +141,10 @@ const BeerDetail = () => {
       <Content className="beers-box">
         <Row>
           <Col sm={4} className="beer-image-detail">
-            <img src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'} style={{height:"270px"}}/>
+            <img
+              src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'}
+              style={{ height: '270px' }}
+            />
           </Col>
           <Col sm={5}>
             <Descriptions title="Información" column={1} style={{ marginTop: '25px' }}>
@@ -152,10 +195,7 @@ const BeerDetail = () => {
               Agregar al diario
               <FormOutlined />
             </Button>
-            <Button type="default" style={{ width: '156.7px' }}>
-              Lista de interés
-              <StarOutlined />
-            </Button>
+            {interestButton()}
           </Col>
         </Row>
       </Content>

@@ -1,8 +1,8 @@
 import { Button, Form, Input, message, Typography } from 'antd';
 import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
-import { UserContext } from '../../utils';
 import { useHistory, Link } from 'react-router-dom';
+import { UserContext } from '../../utils';
 import './style.scss';
 
 const { Text, Title } = Typography;
@@ -19,8 +19,8 @@ const LoginForm = () => {
         setAuthStatus({ ...response.data.user, token: response.data.token });
         history.push('/');
       })
-      .catch((error) => {
-        message.error(error.response.data.error);
+      .catch(() => {
+        message.error('Unauthorized Login');
       });
   };
 
@@ -34,9 +34,9 @@ const LoginForm = () => {
     <Form
       onFinish={onSubmit}
       style={{ padding: '150px 20px 100px 20px' }}
-      wrapperCol={{offset: 3,  span: 17 }}
+      wrapperCol={{ offset: 3, span: 17 }}
     >
-      <Form.Item wrapperCol={{offset: 3, span: 17 }}>
+      <Form.Item wrapperCol={{ offset: 3, span: 17 }}>
         <Title style={{ color: '#4a2328' }} level={2}>
           Cervezología MX
         </Title>
@@ -47,7 +47,7 @@ const LoginForm = () => {
       <Form.Item name="password">
         <Input.Password placeholder="Contraseña" />
       </Form.Item>
-      <Form.Item wrapperCol={{offset: 3, span: 17 }}>
+      <Form.Item wrapperCol={{ offset: 3, span: 17 }}>
         <Button
           type="primary"
           htmlType="submit"
@@ -61,7 +61,7 @@ const LoginForm = () => {
           Ingresar
         </Button>
       </Form.Item>
-      <Form.Item wrapperCol={{ offset: 3}}>
+      <Form.Item wrapperCol={{ offset: 3 }}>
         <Text style={{ fontWeight: '400' }} level={2}>
           ¿No eres un miembro? <Link to="/register">¡Regístrate ya!</Link>
         </Text>

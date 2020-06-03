@@ -1,8 +1,7 @@
-import { Card, Typography, Input, Button, Form, Col, Row, message } from 'antd';
-import React, { useContext, useState } from 'react';
-import { EyeOutlined, QuestionOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { Button, Form, Input, message, Typography } from 'antd';
 import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { UserContext } from '../../utils';
 import './style.scss';
 
@@ -12,13 +11,11 @@ const RegisterForm = (props) => {
   const history = useHistory();
   const { setAuthStatus } = useContext(UserContext);
 
-  const [values, setValues] = useState({ user: '', password: '' });
-
   const onSubmit = (values) => {
     axios
       .post(`/register`, values)
-      .then((response) => {
-        setAuthStatus({ ...response.user, token: response.token });
+      .then(() => {
+        history.push('./login');
       })
       .catch((error) => {
         message.error(error.response.data.error);
@@ -64,3 +61,4 @@ const RegisterForm = (props) => {
 };
 
 export { RegisterForm };
+
