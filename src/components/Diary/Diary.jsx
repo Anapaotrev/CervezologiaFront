@@ -66,7 +66,7 @@ const Diary = () => {
             return (
               <List.Item
                 key={item.title}
-                extra={<img alt="beer" src={beer.photoUrl} style={{width:'180px'}}/>}
+                extra={<img alt="beer" src={beer.photoUrl || 'https://imgur.com/ysHDKVt.jpg'} style={{width:'180px'}}/>}
                 actions={[
                   <Popconfirm
                     key="borrar"

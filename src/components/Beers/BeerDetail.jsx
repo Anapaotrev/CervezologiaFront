@@ -147,7 +147,7 @@ const BeerDetail = () => {
         <Row>
           <Col sm={4} className="beer-image-detail">
             <img
-              src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'}
+              src={beer.photoUrl || 'https://imgur.com/ysHDKVt.jpg'}
               style={{ height: '270px' }}
             />
           </Col>

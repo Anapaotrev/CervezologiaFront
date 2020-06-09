@@ -94,7 +94,7 @@ const Beer = ({ beer, listaIds, onChange }) => {
   const beerImage = () => (
     <div className="beer-image-container">
       <img
-        src={beer.photoUrl || 'https://i.imgur.com/7rFuhpb.jpg'}
+        src={beer.photoUrl || 'https://imgur.com/ysHDKVt.jpg'}
         alt={beer.name}
         className="beer-image"
       />
