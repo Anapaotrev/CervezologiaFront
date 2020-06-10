@@ -1,11 +1,9 @@
-import { Layout, List, Carousel, Space, Rate, message, Popconfirm } from 'antd';
+import { message } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { DeleteOutlined } from '@ant-design/icons';
 import { Entries } from '.';
 import axios from '../../utils/axios';
 import './style.scss';
 
-const { Content } = Layout;
 
 const Diary = () => {
   const [diaries, setDiaries] = useState([]);

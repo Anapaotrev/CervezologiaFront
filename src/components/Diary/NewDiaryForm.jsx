@@ -39,10 +39,14 @@ const NewDiaryForm = (props) => {
   const onFinish = (values) => {
     const diaryPost = values;
     console.log(values);
-    if (values.newBeer && values.newBeer.photoUrl) {
-      const photo = values.newBeer.photoUrl[0].thumbUrl
-      diaryPost.newBeer.photoUrl = photo;
-    }
+    if (values.newBeer) {
+      if (values.newBeer.photoUrl) {
+        const photo = values.newBeer.photoUrl[0].thumbUrl
+        diaryPost.newBeer.photoUrl = photo;
+      } else {
+        diaryPost.newBeer.photoUrl = 'https://imgur.com/ysHDKVt.jpg'
+      }
+    } 
 
     if (props.beer) {
       diaryPost.beer = props.beer;
@@ -169,7 +173,7 @@ const NewDiaryForm = (props) => {
         <Rate allowHalf />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 17 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}>
           Publicar
         </Button>
       </Form.Item>

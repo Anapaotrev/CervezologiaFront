@@ -33,24 +33,6 @@ const NewDiary = () => {
     setVisible(false);
   }
 
-  const onFinish = (values) => {
-    const diaryPost = values;
-    if (values.newBeer.photoUrl) {
-      const photo = values.newBeer.photoUrl[0].thumbUrl
-      diaryPost.newBeer.photoUrl = photo;
-    }
-
-    axios
-      .post('/diary', diaryPost)
-      .then((response) => {
-        console.log(response);
-        window.location.reload(false);
-      })
-      .catch((error) => {
-        message.error(error.statusText);
-      });
-  };
-
   return (
     <Header>
       <Row>
@@ -58,9 +40,13 @@ const NewDiary = () => {
           <h2 className="header-title">Diario Cervecero</h2>
         </Col>
         <Col span={3}>
-          <Button type="primary" onClick={() => setVisible(true)}>
+          <Button 
+            type="primary" 
+            onClick={() => setVisible(true)} 
+            style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
+          >
             Nueva entrada
-            <FormOutlined onFinish={onFinish} />
+            <FormOutlined />
           </Button>
         </Col>
       </Row>
