@@ -50,7 +50,7 @@ const data = [
 const Entries = ({ diaries, setDiaries }) => {
   const [visible, setVisible] = useState(false);
   const [commentOnId, setCommentOnId] = useState('');
-  
+
   const location = useLocation();
 
   function handleCancel(e) {
@@ -59,16 +59,17 @@ const Entries = ({ diaries, setDiaries }) => {
 
   function onFinish(values) {
     setVisible(false);
-    const route = '/diary/add_comment/' + commentOnId
+    const route = '/diary/add_comment/' + commentOnId;
     console.log(route);
-    axios.post(route, values)
-    .then((response) => {
-      window.location.reload(false);
-    })
-    .catch((error) => {
-      message.error(error.statusText);
-    });
-  } 
+    axios
+      .post(route, values)
+      .then((response) => {
+        window.location.reload(false);
+      })
+      .catch((error) => {
+        message.error(error.statusText);
+      });
+  }
 
   function comment(id) {
     setCommentOnId(id);
@@ -77,15 +78,11 @@ const Entries = ({ diaries, setDiaries }) => {
 
   const getDatetime = (date) => {
     return (
-      <Tooltip
-        title={moment(date).format('YYYY-MM-DD HH:mm:ss')}
-      >
-        <span>
-          {moment(date).fromNow()}
-        </span>
+      <Tooltip title={moment(date).format('YYYY-MM-DD HH:mm:ss')}>
+        <span>{moment(date).fromNow()}</span>
       </Tooltip>
     );
-  }
+  };
 
   const deleteDiary = (id) => {
     axios
@@ -130,7 +127,7 @@ const Entries = ({ diaries, setDiaries }) => {
                     </div>
                   }
                   actions={[
-                    location.pathname == "/profile" && (
+                    location.pathname == '/profile' && (
                       <Popconfirm
                         key="borrar"
                         placement="bottom"
@@ -178,21 +175,23 @@ const Entries = ({ diaries, setDiaries }) => {
                   >
                     Responder
                   </Button>
-                  {item.comments.length > 0 && (<List
-                    className="comment-list"
-                    header={`${item.comments.length} replies`}
-                    itemLayout="horizontal"
-                    dataSource={item.comments}
-                    renderItem={commentItem => (
-                      <li>
-                        <Comment
-                          author={commentItem.user}
-                          content={commentItem.comment}
-                          datetime={getDatetime(commentItem.createdAt)}
-                        />
-                      </li>
-                    )}
-                  />)}
+                  {item.comments.length > 0 && (
+                    <List
+                      className="comment-list"
+                      header={`${item.comments.length} replies`}
+                      itemLayout="horizontal"
+                      dataSource={item.comments}
+                      renderItem={(commentItem) => (
+                        <li>
+                          <Comment
+                            author={commentItem.user.name}
+                            content={commentItem.comment}
+                            datetime={getDatetime(commentItem.createdAt)}
+                          />
+                        </li>
+                      )}
+                    />
+                  )}
                 </List.Item>
                 <Modal
                   title="Comentario"
@@ -202,7 +201,8 @@ const Entries = ({ diaries, setDiaries }) => {
                   destroyOnClose={true}
                 >
                   <Form onFinish={onFinish} validateMessages={validateMessages}>
-                    <Form.Item name="comment"
+                    <Form.Item
+                      name="comment"
                       rules={[
                         {
                           required: true,
@@ -212,7 +212,11 @@ const Entries = ({ diaries, setDiaries }) => {
                       <TextArea rows={4} />
                     </Form.Item>
                     <Form.Item>
-                      <Button htmlType="submit" type="primary" style={{ backgroundColor: '#60a246', borderColor: '#60a246' }}>
+                      <Button
+                        htmlType="submit"
+                        type="primary"
+                        style={{ backgroundColor: '#60a246', borderColor: '#60a246' }}
+                      >
                         Publicar comentario
                       </Button>
                     </Form.Item>

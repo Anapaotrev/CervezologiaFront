@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { getStoredUserAuth, USER_SESSION } from './helpers';
 
-axios.defaults.baseURL = '/api';
+axios.defaults.baseURL = 'https://cervezologia.herokuapp.com/api';
 
 axios.interceptors.request.use(
   (config) => {
