@@ -99,6 +99,7 @@ const Filters = (props) => {
           type="primary"
           onClick={() => showListaInteres()}
           style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
+          block
         >
           Catálogo Completo
         </Button>
@@ -109,6 +110,7 @@ const Filters = (props) => {
         type="primary"
         onClick={() => showListaInteres()}
         style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
+        block
       >
         Lista de Interés <StarOutlined />
       </Button>
@@ -117,28 +119,30 @@ const Filters = (props) => {
 
   return (
     <Header>
-      <Row>
-        <Col span={8}>
+      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+        <Col className="gutter-row" span={8}>
           <h2 className="beers-title">Cervezas</h2>
         </Col>
-        <Col span={5}>
+        <Col className="gutter-row" span={8}>
           <Search
             placeholder="Buscar cerveza"
             onSearch={(value) => props.onSearch(value)}
-            style={{ width: 200, lineHeight: '30px' }}
+            style={{ lineHeight: '30px' }}
           />
         </Col>
-        <Col span={7}>
+        <Col className="gutter-row" span={4}>
           <Button
             type="primary"
+            className="button-text"
             onClick={() => setVisible(true)}
             style={{ backgroundColor: '#60a246', borderColor: '#60a246' }}
+            block
           >
             Filtrar <FilterOutlined />
           </Button>
         </Col>
         {isAuth() && (
-          <Col span={2}>
+          <Col className="gutter-row" span={4}>
             <BotonListaInteres />
           </Col>
         )}

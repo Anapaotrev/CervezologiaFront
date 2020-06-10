@@ -54,11 +54,11 @@ const NewDiary = () => {
   return (
     <Header>
       <Row>
-        <Col span={21}>
+        <Col span={20}>
           <h2 className="header-title">Diario Cervecero</h2>
         </Col>
-        <Col span={3}>
-          <Button type="primary" onClick={() => setVisible(true)}>
+        <Col span={4}>
+          <Button type="primary" onClick={() => setVisible(true)} block>
             Nueva entrada
             <FormOutlined onFinish={onFinish} />
           </Button>

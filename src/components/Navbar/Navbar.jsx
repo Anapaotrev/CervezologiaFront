@@ -13,13 +13,13 @@ const Navbar = (props) => {
 
   return (
     <Row align="middle" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-      <Col className="gutter-row" span={16}>
+      <Col className="gutter-row" span={14}>
         <img src={require('../../assets/logo-color.png')} className="logo" />
         <Text style={{ paddingTop: '5px', fontWeight: '800', fontSize: '20px', color: '#000000' }}>
           Cervezología MX
         </Text>
       </Col>
-      <Col className="gutter-row" span={8}>
+      <Col className="gutter-row" span={10}>
         <Menu
           onClick={(e) => setCurrentKey(e.key)}
           mode="horizontal"

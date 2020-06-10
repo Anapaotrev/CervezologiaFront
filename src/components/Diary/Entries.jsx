@@ -61,11 +61,13 @@ const Entries = ({ diaries, setDiaries }) => {
               <List.Item
                 key={item.title}
                 extra={
-                  <img
-                    alt="beer"
-                    src={beer.photoUrl || 'https://imgur.com/ysHDKVt.jpg'}
-                    style={{ width: '180px' }}
-                  />
+                  <div style={{ maxWidth: '180px' }}>
+                    <img
+                      alt="beer"
+                      src={beer.photoUrl || 'https://imgur.com/ysHDKVt.jpg'}
+                      style={{ width: '100%' }}
+                    />
+                  </div>
                 }
                 actions={[
                   user._id === item.createdBy._id && (

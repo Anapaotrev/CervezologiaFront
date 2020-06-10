@@ -93,10 +93,10 @@ const Beers = () => {
               grid={{
                 gutter: 16,
                 xs: 1,
-                sm: 3,
-                md: 4,
+                sm: 2,
+                md: 3,
                 lg: 5,
-                xl: 6,
+                xl: 5,
               }}
               itemLayout="vertical"
               dataSource={beers}
