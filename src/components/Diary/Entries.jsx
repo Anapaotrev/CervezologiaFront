@@ -23,56 +23,32 @@ const validateMessages = {
 
 const data = [
   {
-    author: 'Han Solo',
-    content: (
+    user: 'Han Solo',
+    comment: (
       <p>
         We supply a series of design principles, practical patterns and high quality design
         resources (Sketch and Axure), to help people create their product prototypes beautifully and
         efficiently.
       </p>
     ),
-    datetime: (
-      <Tooltip
-        title={moment()
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')}
-      >
-        <span>
-          {moment()
-            .subtract(1, 'days')
-            .fromNow()}
-        </span>
-      </Tooltip>
-    ),
+    createdAt: Date.parse('2020-06-10T04:55:04.344+00:00'),
   },
   {
-    author: 'Han Solo',
-    content: (
+    user: 'Han Solo',
+    comment: (
       <p>
         We supply a series of design principles, practical patterns and high quality design
         resources (Sketch and Axure), to help people create their product prototypes beautifully and
         efficiently.
       </p>
     ),
-    datetime: (
-      <Tooltip
-        title={moment()
-          .subtract(2, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')}
-      >
-        <span>
-          {moment()
-            .subtract(8, 'days')
-            .fromNow()}
-        </span>
-      </Tooltip>
-    ),
+    createdAt: Date.parse('2020-06-10T04:55:04.344+00:00'),
   },
 ];
 
 const Entries = ({ diaries, setDiaries }) => {
   const [visible, setVisible] = useState(false);
-  const [CommentOnId, setCommentOnId] = useState('');
+  const [commentOnId, setCommentOnId] = useState('');
   
   const location = useLocation();
 
@@ -81,14 +57,33 @@ const Entries = ({ diaries, setDiaries }) => {
   }
 
   function onFinish(values) {
-    console.log(values);
     setVisible(false);
-    console.log(CommentOnId);
+    const route = '/diary/add_comment/' + commentOnId
+    console.log(route);
+    axios.post(route, values)
+    .then((response) => {
+      window.location.reload(false);
+    })
+    .catch((error) => {
+      message.error(error.statusText);
+    });
   } 
 
   function comment(id) {
     setCommentOnId(id);
     setVisible(true);
+  }
+
+  const getDatetime = (date) => {
+    return (
+      <Tooltip
+        title={moment(date).format('YYYY-MM-DD HH:mm:ss')}
+      >
+        <span>
+          {moment(date).fromNow()}
+        </span>
+      </Tooltip>
+    );
   }
 
   const deleteDiary = (id) => {
@@ -163,21 +158,21 @@ const Entries = ({ diaries, setDiaries }) => {
                     Responder
                   </Button>
                   )}
-                  <List
+                  {item.comments.length > 0 && (<List
                     className="comment-list"
-                    header={`${data.length} replies`}
+                    header={`${item.comments.length} replies`}
                     itemLayout="horizontal"
-                    dataSource={data}
-                    renderItem={item => (
+                    dataSource={item.comments}
+                    renderItem={commentItem => (
                       <li>
                         <Comment
-                          author={item.author}
-                          content={item.content}
-                          datetime={item.datetime}
+                          author={commentItem.user}
+                          content={commentItem.comment}
+                          datetime={getDatetime(commentItem.createdAt)}
                         />
                       </li>
                     )}
-                  />
+                  />)}
                 </List.Item>
                 <Modal
                   title="Comentario"
