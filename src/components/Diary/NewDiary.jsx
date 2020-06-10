@@ -39,7 +39,11 @@ const NewDiary = () => {
         <Col span={20}>
           <h2 className="header-title">Diario Cervecero</h2>
         </Col>
+<<<<<<< HEAD
         <Col span={4}>
+=======
+        <Col span={3}>
+>>>>>>> Add comments to a diary post
           <Button 
             type="primary" 
             onClick={() => setVisible(true)} 
