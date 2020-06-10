@@ -4,7 +4,6 @@ import { Entries } from '.';
 import axios from '../../utils/axios';
 import './style.scss';
 
-
 const Diary = () => {
   const [diaries, setDiaries] = useState([]);
 
