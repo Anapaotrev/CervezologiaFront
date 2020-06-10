@@ -101,7 +101,7 @@ const Filters = (props) => {
           style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
           block
         >
-          Catálogo Completo
+          <p className="text-overflow">Catálogo Completo</p>
         </Button>
       );
     }
@@ -112,7 +112,7 @@ const Filters = (props) => {
         style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
         block
       >
-        Lista de Interés <StarOutlined />
+        <p className="text-overflow"><StarOutlined />  Lista de Interés</p>
       </Button>
     );
   };
@@ -123,7 +123,7 @@ const Filters = (props) => {
         <Col className="gutter-row" span={8}>
           <h2 className="beers-title">Cervezas</h2>
         </Col>
-        <Col className="gutter-row" span={8}>
+        <Col className="gutter-row" span={7}>
           <Search
             placeholder="Buscar cerveza"
             onSearch={(value) => props.onSearch(value)}
@@ -138,11 +138,11 @@ const Filters = (props) => {
             style={{ backgroundColor: '#60a246', borderColor: '#60a246' }}
             block
           >
-            Filtrar <FilterOutlined />
+            <p className="text-overflow"><FilterOutlined />  Filtrar</p>
           </Button>
         </Col>
         {isAuth() && (
-          <Col className="gutter-row" span={4}>
+          <Col className="gutter-row" span={5}>
             <BotonListaInteres />
           </Col>
         )}
