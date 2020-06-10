@@ -92,7 +92,11 @@ const Beers = () => {
             <List
               grid={{
                 gutter: 16,
-                column: 6,
+                xs: 1,
+                sm: 3,
+                md: 4,
+                lg: 5,
+                xl: 6,
               }}
               itemLayout="vertical"
               dataSource={beers}
