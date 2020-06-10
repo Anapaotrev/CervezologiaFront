@@ -1,6 +1,7 @@
 import { Layout, List, Space, Rate, message, Popconfirm } from 'antd';
 import { Form, Input, Modal, Comment, Tooltip, Button } from 'antd';
 import React, { Fragment, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import { NewDiary } from '.';
 import moment from 'moment';
