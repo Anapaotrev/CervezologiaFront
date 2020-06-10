@@ -49,7 +49,7 @@ const Profile = () => {
         <Title>{username || user.name}</Title>
       </Content>
       <Content>
-        <Entries diaries={diaries} />
+        <Entries diaries={diaries} setDiaries={setDiaries} />
       </Content>
     </Layout>
   );
