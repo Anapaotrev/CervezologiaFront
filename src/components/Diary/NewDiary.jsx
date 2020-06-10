@@ -35,18 +35,20 @@ const NewDiary = () => {
 
   return (
     <Header>
-      <Row>
-        <Col span={20}>
+      <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+        <Col className="gutter-row" span={19}>
           <h2 className="header-title">Diario Cervecero</h2>
         </Col>
-        <Col span={4}>
+        <Col className="gutter-row" span={5}>
           <Button 
             type="primary" 
             onClick={() => setVisible(true)} 
             style={{ backgroundColor: '#FCB941', borderColor: '#FCB941' }}
+            block
           >
-            Nueva entrada
-            <FormOutlined />
+            <p className="text-overflow">
+              <FormOutlined />  Nueva entrada
+            </p>
           </Button>
         </Col>
       </Row>
