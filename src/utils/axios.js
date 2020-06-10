@@ -2,6 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { getStoredUserAuth, USER_SESSION } from './helpers';
 
+axios.defaults.baseURL = '/api';
+
 axios.interceptors.request.use(
   (config) => {
     const user = getStoredUserAuth();
@@ -25,7 +27,7 @@ axios.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       Cookies.remove(USER_SESSION);
-      window.location.href = "/login";
+      window.location.href = '/login';
     }
     return error;
   }
