@@ -4,6 +4,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { NewDiary } from '.';
 import axios from '../../utils/axios';
 import './style.scss';
+import { getStoredUserAuth } from '../../utils';
 
 const { Content } = Layout;
 
@@ -21,6 +22,12 @@ const Desc = ({ style, origin }) => (
 );
 
 const Entries = ({ diaries, setDiaries }) => {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    setUser(getStoredUserAuth());
+  }, [diaries]);
+
   const deleteDiary = (id) => {
     axios
       .delete(`/diary/${id}`)
@@ -61,20 +68,32 @@ const Entries = ({ diaries, setDiaries }) => {
                   />
                 }
                 actions={[
-                  <Popconfirm
-                    key="borrar"
-                    placement="bottom"
-                    title={'Deseas borrar esta entrada?'}
-                    onConfirm={() => deleteDiary(item._id)}
-                    okText="Borrar"
-                    cancelText="Cancelar"
-                  >
-                    <DeleteOutlined style={{ fontSize: 20 }} />
-                  </Popconfirm>,
+                  user._id === item.createdBy._id && (
+                    <Popconfirm
+                      key="borrar"
+                      placement="bottom"
+                      title={'Deseas borrar esta entrada?'}
+                      onConfirm={() => deleteDiary(item._id)}
+                      okText="Borrar"
+                      cancelText="Cancelar"
+                    >
+                      <DeleteOutlined style={{ fontSize: 20 }} />
+                    </Popconfirm>
+                  ),
                 ]}
               >
                 <List.Item.Meta
-                  title={beer.name}
+                  title={
+                    <p style={{ fontSize: 24 }}>
+                      {beer.name}{' '}
+                      <a
+                        style={{ fontSize: 16, color: 'grey' }}
+                        href={`/profile/${item.createdBy.name}`}
+                      >
+                        {item.createdBy.name}
+                      </a>
+                    </p>
+                  }
                   description={<Desc style={beer.style} origin={beer.origin} />}
                 />
                 <Rate

@@ -17,16 +17,27 @@ const Profile = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    axios
-      .get('/my_diaries')
-      .then((response) => {
-        setDiaries(response.data);
-      })
-      .catch((error) => {
-        message.error(error.message);
-      });
+    if (!username || username === '') {
+      axios
+        .get('/my_diaries')
+        .then((response) => {
+          setDiaries(response.data);
+        })
+        .catch((error) => {
+          message.error(error.message);
+        });
+    } else {
+      axios
+        .get(`/diaries_by/${username}`)
+        .then((response) => {
+          setDiaries(response.data);
+        })
+        .catch((error) => {
+          message.error(error.message);
+        });
+    }
     setUser(getStoredUserAuth());
-  }, []);
+  }, [username]);
 
   if (!isAuth()) {
     return null;
@@ -34,9 +45,8 @@ const Profile = () => {
 
   return (
     <Layout>
-      <Content className="profile-box">
-        <Title>{user.name}</Title>
-        {user.email}
+      <Content>
+        <Title>{username || user.name}</Title>
       </Content>
       <Content>
         <Entries diaries={diaries} />

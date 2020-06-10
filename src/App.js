@@ -45,6 +45,9 @@ function App() {
               <Route path="/profile" exact>
                 <Profile />
               </Route>
+              <Route path="/profile/:username" exact>
+                <Profile />
+              </Route>
             </Switch>
           </Content>
           <Footer className="footer" />
