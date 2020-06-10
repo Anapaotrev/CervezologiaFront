@@ -42,9 +42,18 @@ const Navbar = (props) => {
             </Link>
           </Menu.Item>
         )}
+        {isAuth() && (
+          <Menu.Item key="/profile">
+            <Link to="/profile" className="link">
+              PERFIL
+            </Link>
+          </Menu.Item>
+        )}
         <Menu.Item key="/login">
           {isAuth() ? (
-            <Link to="/" onClick={() => setUnauthStatus()}>LOGOUT</Link>
+            <Link to="/" onClick={() => setUnauthStatus()}>
+              LOGOUT
+            </Link>
           ) : (
             <Link to="/login" className="login-button">
               LOGIN
