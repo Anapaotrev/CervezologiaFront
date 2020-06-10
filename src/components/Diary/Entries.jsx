@@ -1,6 +1,7 @@
 import { Layout, List, Space, Rate, message, Popconfirm } from 'antd';
 import { Form, Input, Modal, Comment, Tooltip, Button } from 'antd';
 import React, { Fragment, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 import { NewDiary } from '.';
 import moment from 'moment';
@@ -72,6 +73,8 @@ const data = [
 const Entries = ({ diaries, setDiaries }) => {
   const [visible, setVisible] = useState(false);
   const [CommentOnId, setCommentOnId] = useState('');
+  
+  const location = useLocation();
 
   function handleCancel(e) {
     setVisible(false);
@@ -122,7 +125,7 @@ const Entries = ({ diaries, setDiaries }) => {
                 <List.Item
                   key={item.title}
                   extra={<img alt="beer" src={beer.photoUrl || 'https://imgur.com/ysHDKVt.jpg'} style={{width:'180px'}}/>}
-                  actions={[
+                  actions={location.pathname == "/profile" ? [
                     <Popconfirm
                       key="borrar"
                       placement="bottom"
@@ -133,7 +136,7 @@ const Entries = ({ diaries, setDiaries }) => {
                     >
                       <DeleteOutlined style={{ fontSize: 20 }} />
                     </Popconfirm>,
-                  ]}
+                  ] : []}
                 >
                   <List.Item.Meta
                     title={beer.name}
@@ -151,7 +154,7 @@ const Entries = ({ diaries, setDiaries }) => {
                   </p>
                   {item.notes}
                   <br></br>
-                  <Button
+                  {location.pathname == "/diary" && (<Button
                     type="primary"
                     onClick={() => comment(item._id)}
                     className="btn-comentario"
@@ -159,6 +162,7 @@ const Entries = ({ diaries, setDiaries }) => {
                   >
                     Responder
                   </Button>
+                  )}
                   <List
                     className="comment-list"
                     header={`${data.length} replies`}
