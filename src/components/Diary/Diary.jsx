@@ -4,10 +4,6 @@ import { Entries } from '.';
 import axios from '../../utils/axios';
 import './style.scss';
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Add comments to a diary post
 const Diary = () => {
   const [diaries, setDiaries] = useState([]);
 
