@@ -130,7 +130,7 @@ const Entries = ({ diaries, setDiaries }) => {
                     </div>
                   }
                   actions={[
-                    user._id === item.createdBy._id && (
+                    location.pathname == "/profile" && (
                       <Popconfirm
                         key="borrar"
                         placement="bottom"
