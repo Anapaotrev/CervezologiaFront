@@ -13,7 +13,7 @@ const Navbar = (props) => {
 
   return (
     <Row align="middle">
-      <Col span={16}>
+      <Col span={14}>
         <img src={require('../../assets/logo-color.png')} className="logo" />
         <Text style={{ paddingTop: '5px', fontWeight: '800', fontSize: '20px', color: '#000000' }}>
           Cervezología MX
